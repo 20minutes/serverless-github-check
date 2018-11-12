@@ -8,12 +8,6 @@ module.exports = {
   devtool: 'source-map',
   externals: [nodeExternals()],
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
-  optimization: {
-    minimize: false,
-  },
-  performance: {
-    hints: false,
-  },
   module: {
     rules: [
       {

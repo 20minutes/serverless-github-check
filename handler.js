@@ -6,7 +6,7 @@ export async function checkSpecification(event, context, callback) {
 
   const body = JSON.parse(event.body)
   // when creating the webhook
-  if (body && ('hook_id' in body)) {
+  if (body && ('hook' in body)) {
     if (('organization' in body)) {
       response = {
         statusCode: 200,
