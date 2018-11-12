@@ -5,6 +5,8 @@
 
 Apply some simple checks on each PR.
 
+![Example](https://user-images.githubusercontent.com/62333/48354163-48c02b00-e691-11e8-8d00-38d25c284d89.png)
+
 ## Use Case
 
 It validates GitHub Pull Requests against some specifications:
