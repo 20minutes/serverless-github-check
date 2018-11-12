@@ -76,6 +76,34 @@ describe('Validating GitHub event', () => {
       statusCode: 200,
     })
   })
+
+  test('hook event for an organization is ok', async () => {
+    const callback = jest.fn()
+    const githubEvent = {
+      zen: 'Speak like a human.',
+      hook_id: 1,
+      hook: {
+        events: [
+          'pull_request',
+          'push',
+        ],
+      },
+      organization: {
+        login: '20minutes',
+      },
+      sender: {
+        login: 'diego',
+      },
+    }
+
+    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Hello diego, the webhook is now enabled for the organization 20minutes, enjoy!',
+      statusCode: 200,
+    })
+  })
 })
 
 describe('Validating specification', () => {

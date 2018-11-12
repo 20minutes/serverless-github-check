@@ -7,9 +7,16 @@ export async function checkSpecification(event, context, callback) {
   const body = JSON.parse(event.body)
   // when creating the webhook
   if (body && ('hook_id' in body)) {
-    response = {
-      statusCode: 200,
-      body: `Hello ${body.sender.login}, the webhook is now enabled for ${body.repository.full_name}, enjoy!`,
+    if (('organization' in body)) {
+      response = {
+        statusCode: 200,
+        body: `Hello ${body.sender.login}, the webhook is now enabled for the organization ${body.organization.login}, enjoy!`,
+      }
+    } else {
+      response = {
+        statusCode: 200,
+        body: `Hello ${body.sender.login}, the webhook is now enabled for ${body.repository.full_name}, enjoy!`,
+      }
     }
 
     if (!body.hook.events.includes('pull_request')) {
