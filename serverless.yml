@@ -1,0 +1,34 @@
+frameworkVersion: ">=1.27.0 <2.0.0"
+
+service: serverless-github-check
+
+plugins:
+    - serverless-webpack
+    - serverless-offline
+
+custom:
+    webpack:
+        includeModules: true
+
+provider:
+    name: aws
+    runtime: nodejs8.10
+    profile: default
+    region: ${opt:region, 'eu-west-1'}
+
+functions:
+    specification:
+        handler: handler.checkSpecification
+        description: Validate GitHub PRs against some specifications
+        environment:
+            NAMESPACE: 20 Minutes
+            CHECK_BODY_LENGTH: 8
+            CHECK_TITLE_LENGTH: 8
+            # SecureString from SSM Parameters
+            GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
+        events:
+            -
+                http:
+                    path: webhook
+                    method: post
+                    cors: true
