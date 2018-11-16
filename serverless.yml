@@ -15,20 +15,41 @@ provider:
     runtime: nodejs8.10
     profile: default
     region: ${opt:region, 'eu-west-1'}
+    environment:
+        NAMESPACE: 20 Minutes
+        # SecureString from SSM Parameters
+        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
+
 
 functions:
     specification:
         handler: handler.checkSpecification
         description: Validate GitHub PRs against some specifications
         environment:
-            NAMESPACE: 20 Minutes
             CHECK_BODY_LENGTH: 8
             CHECK_TITLE_LENGTH: 8
-            # SecureString from SSM Parameters
-            GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
+        events:
+            -
+                # default event
+                http:
+                    path: webhook
+                    method: post
+                    cors: true
+            -
+                http:
+                    path: webhook/specification
+                    method: post
+                    cors: true
+
+    label:
+        handler: handler.checkLabel
+        description: Check for GitHub PR labels to block merge
+        environment:
+            # coma separated labels
+            BLOCK_LABELS: "Work In Progress,Waiting For Change,Waiting For Travis"
         events:
             -
                 http:
-                    path: webhook
+                    path: webhook/label
                     method: post
                     cors: true

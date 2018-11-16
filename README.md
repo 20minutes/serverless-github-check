@@ -1,4 +1,4 @@
-# Serverless Github Check
+# Serverless GitHub Check
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com/)
 [![Build Status](https://travis-ci.com/20minutes/serverless-github-check.svg?branch=master)](https://travis-ci.com/20minutes/serverless-github-check)
@@ -7,11 +7,16 @@ Apply some simple checks on each PR.
 
 ![Example](https://user-images.githubusercontent.com/62333/48354163-48c02b00-e691-11e8-8d00-38d25c284d89.png)
 
-## Use Case
+## Use Cases
 
-It validates GitHub Pull Requests against some specifications:
-- `body` should be at least 8 characters long
-- `title` should be at least 8 characters long
+We have two lambdas:
+- **specification**: It validates GitHub Pull Requests against some specifications:
+    - `body` should be at least 8 characters long
+    - `title` should be at least 8 characters long
+- **label**: It check if there is a blocking label in the GitHub Pull Request
+    - if one blocking label (default: `Work In Progress`, `Waiting For Change`, `Waiting For Travis`) is found, PR is blocked
+    - if no labels are defined in the PR, PR is blocked
+    - if no blocking labels are defined, PR is validated
 
 ## Prerequisites
 
@@ -47,6 +52,7 @@ You can update some options from the `serverless.yml` file:
 - `NAMESPACE`: change the namespace used in the PR check (displayed at the bottom of each PR)
 - `CHECK_BODY_LENGTH`: change the minimun length of the body of the PR
 - `CHECK_TITLE_LENGTH`: change the minimun length of the title of the PR
+- `BLOCK_LABELS`: define which label will block a PR (coma separated strings)
 
 ## Info
 
