@@ -5,7 +5,7 @@
 
 Apply some simple checks on each PR.
 
-![Example](https://user-images.githubusercontent.com/62333/48354163-48c02b00-e691-11e8-8d00-38d25c284d89.png)
+![Example](https://user-images.githubusercontent.com/62333/48707770-c7bce280-ec00-11e8-9dd1-5808216ad753.png)
 
 ## Use Cases
 
