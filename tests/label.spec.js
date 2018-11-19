@@ -1,18 +1,17 @@
 import { client } from 'octonode'
-import { checkSpecification } from '../handler'
+import { checkLabel } from '../functions/label'
 
 jest.mock('octonode')
 
 // mimic serverless environment variables
 process.env.NAMESPACE = '20 Minutes'
-process.env.CHECK_BODY_LENGTH = 8
-process.env.CHECK_TITLE_LENGTH = 8
+process.env.BLOCK_LABELS = 'wip , work in progress'
 
 describe('Validating GitHub event', () => {
   test('bad event body', async () => {
     const callback = jest.fn()
 
-    await checkSpecification({ body: '{}' }, {}, callback)
+    await checkLabel({ body: '{}' }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -40,7 +39,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -68,7 +67,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -96,7 +95,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -106,8 +105,8 @@ describe('Validating GitHub event', () => {
   })
 })
 
-describe('Validating specification', () => {
-  test('title is too short', async () => {
+describe('Validating label', () => {
+  test('got a blocking label', async () => {
     client.mockReturnValue({
       repo: jest.fn((params) => {
         expect(params).toBe('foo/bar')
@@ -116,7 +115,7 @@ describe('Validating specification', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - PR Specification')
+            expect(payload.context).toBe('20 Minutes - Label validation')
             expect(payload.description).toBeDefined()
           }),
         }
@@ -131,13 +130,16 @@ describe('Validating specification', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
+        labels: [{
+          name: 'wip',
+        }],
       },
       repository: {
         full_name: 'foo/bar',
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -146,7 +148,7 @@ describe('Validating specification', () => {
     })
   })
 
-  test('body is too short', async () => {
+  test('not label found in the PR', async () => {
     client.mockReturnValue({
       repo: jest.fn((params) => {
         expect(params).toBe('foo/bar')
@@ -155,7 +157,7 @@ describe('Validating specification', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - PR Specification')
+            expect(payload.context).toBe('20 Minutes - Label validation')
             expect(payload.description).toBeDefined()
           }),
         }
@@ -170,13 +172,14 @@ describe('Validating specification', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
+        labels: [],
       },
       repository: {
         full_name: 'foo/bar',
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -185,7 +188,7 @@ describe('Validating specification', () => {
     })
   })
 
-  test('body and title are OK', async () => {
+  test('no blocking label found', async () => {
     client.mockReturnValue({
       repo: jest.fn((params) => {
         expect(params).toBe('foo/bar')
@@ -194,7 +197,7 @@ describe('Validating specification', () => {
           statusAsync: jest.fn((commit, payload) => {
             expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
             expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - PR Specification')
+            expect(payload.context).toBe('20 Minutes - Label validation')
             expect(payload.description).toBeDefined()
           }),
         }
@@ -209,13 +212,101 @@ describe('Validating specification', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
+        labels: [{
+          name: 'ready!',
+        }],
       },
       repository: {
         full_name: 'foo/bar',
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Process finished with state: success',
+      statusCode: 204,
+    })
+  })
+
+  test('no blocking label found (with partial label)', async () => {
+    client.mockReturnValue({
+      repo: jest.fn((params) => {
+        expect(params).toBe('foo/bar')
+
+        return {
+          statusAsync: jest.fn((commit, payload) => {
+            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
+            expect(payload.state).toBe('success')
+            expect(payload.context).toBe('20 Minutes - Label validation')
+            expect(payload.description).toBeDefined()
+          }),
+        }
+      }),
+    })
+    const callback = jest.fn()
+    const githubEvent = {
+      pull_request: {
+        number: 42,
+        title: 'Update the README with new information',
+        body: 'This is a pretty simple change that we need to pull into master.',
+        head: {
+          sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        },
+        labels: [{
+          name: 'work in progre',
+        }],
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Process finished with state: success',
+      statusCode: 204,
+    })
+  })
+
+  test('no blocking label defined', async () => {
+    process.env.BLOCK_LABELS = ''
+    client.mockReturnValue({
+      repo: jest.fn((params) => {
+        expect(params).toBe('foo/bar')
+
+        return {
+          statusAsync: jest.fn((commit, payload) => {
+            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
+            expect(payload.state).toBe('success')
+            expect(payload.context).toBe('20 Minutes - Label validation')
+            expect(payload.description).toBeDefined()
+          }),
+        }
+      }),
+    })
+    const callback = jest.fn()
+    const githubEvent = {
+      pull_request: {
+        number: 42,
+        title: 'Update the README with new information',
+        body: 'This is a pretty simple change that we need to pull into master.',
+        head: {
+          sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        },
+        labels: [{
+          name: 'wip',
+        }],
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
