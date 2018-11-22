@@ -77,7 +77,7 @@ export async function checkLabel(event, context, callback) {
   }
 
   // loop thru PR labels to see if we found one which should block the PR
-  const validation = body.pull_request.labels.some(({ name }) => {
+  const validation = body.pull_request.labels.every(({ name }) => {
     if (blockLabels.find(blockLabel => blockLabel === name)) {
       console.log('Fail: at least one blocked label found')
 

@@ -148,7 +148,53 @@ describe('Validating label', () => {
     })
   })
 
-  test('not label found in the PR', async () => {
+  test('got a blocking label in multiple labels', async () => {
+    client.mockReturnValue({
+      repo: jest.fn((params) => {
+        expect(params).toBe('foo/bar')
+
+        return {
+          statusAsync: jest.fn((commit, payload) => {
+            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
+            expect(payload.state).toBe('failure')
+            expect(payload.context).toBe('20 Minutes - Label validation')
+            expect(payload.description).toBeDefined()
+          }),
+        }
+      }),
+    })
+    const callback = jest.fn()
+    const githubEvent = {
+      pull_request: {
+        number: 42,
+        title: 'Update',
+        body: 'This is a pretty simple change that we need to pull into master.',
+        head: {
+          sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        },
+        labels: [{
+          name: 'foo',
+        }, {
+          name: 'wip',
+        }, {
+          name: 'bar',
+        }],
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Process finished with state: failure',
+      statusCode: 204,
+    })
+  })
+
+  test('no label found in the PR', async () => {
     client.mockReturnValue({
       repo: jest.fn((params) => {
         expect(params).toBe('foo/bar')
