@@ -53,3 +53,13 @@ functions:
                     path: webhook/label
                     method: post
                     cors: true
+
+    fixup:
+        handler: handler.checkFixupCommits
+        description: Ensure no "fixup!" commits are in the PR
+        events:
+            -
+                http:
+                    path: webhook/fixup
+                    method: post
+                    cors: true

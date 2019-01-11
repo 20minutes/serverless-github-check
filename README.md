@@ -5,11 +5,12 @@
 
 Apply some simple checks on each PR.
 
-![Example](https://user-images.githubusercontent.com/62333/48707770-c7bce280-ec00-11e8-9dd1-5808216ad753.png)
+![Example](https://user-images.githubusercontent.com/62333/51041495-5d9a3b80-15ba-11e9-9ead-815448ad0fee.png)
 
 ## Use Cases
 
-We have two lambdas:
+We have 3 functions available:
+
 - **specification**: It validates GitHub Pull Requests against some specifications:
     - `body` should be at least 8 characters long
     - `title` should be at least 8 characters long
@@ -17,6 +18,9 @@ We have two lambdas:
     - if one blocking label (default: `Work In Progress`, `Waiting For Change`, `Waiting For Travis`) is found, PR is blocked
     - if no labels are defined in the PR, PR is blocked
     - if no blocking labels are defined, PR is validated
+- **fixup**: It check if there is some `fixup!` commits in the PR history
+    - if at least one fixup commit are found, PR is blocked
+    - if no fixup commits are found, PR is validated
 
 ## Prerequisites
 
@@ -34,6 +38,7 @@ We have two lambdas:
 - Deploy the service using: `serverless deploy`
 
 By default
+
 - it'll use the AWS profile `default`, but you can use your own using (be sure it's defined in your `~/.aws/credentials`): `serverless deploy --aws-profile myprofile`
 - it'll be deployed to the AWS region `eu-west-1` but you can change it using: `serverless deploy --region us-east-1`
 
