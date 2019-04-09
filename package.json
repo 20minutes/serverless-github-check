@@ -1,6 +1,6 @@
 {
   "name": "serverless-github-check",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "handler.js",
   "scripts": {
     "test": "jest",
