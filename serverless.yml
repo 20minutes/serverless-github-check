@@ -9,6 +9,7 @@ plugins:
 custom:
     webpack:
         includeModules: true
+        packager: yarn
 
 provider:
     name: aws
@@ -19,7 +20,6 @@ provider:
         NAMESPACE: 20 Minutes
         # SecureString from SSM Parameters
         GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
-
 
 functions:
     specification:
