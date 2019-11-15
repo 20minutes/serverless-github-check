@@ -1,4 +1,4 @@
-frameworkVersion: ">=1.27.0 <2.0.0"
+frameworkVersion: ">=1.57.0 <2.0.0"
 
 service: serverless-github-check
 
@@ -13,7 +13,7 @@ custom:
 
 provider:
     name: aws
-    runtime: nodejs8.10
+    runtime: nodejs10.x
     profile: default
     region: ${opt:region, 'eu-west-1'}
     environment:
