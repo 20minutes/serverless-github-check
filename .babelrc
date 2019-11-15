@@ -2,17 +2,14 @@
   "comments": false,
   "plugins": [
     "source-map-support",
-    "@babel/plugin-transform-runtime",
-    "@babel/plugin-syntax-import-meta",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-json-strings"
+    "@babel/plugin-proposal-class-properties"
   ],
   "presets": [
     [
       "@babel/preset-env",
       {
         "targets": {
-          "node": "8.10"
+          "node": "10.17"
         }
       }
     ]

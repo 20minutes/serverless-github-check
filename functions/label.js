@@ -8,9 +8,9 @@ export async function checkLabel(event, context, callback) {
     // convert to array
     .split(',')
     // trim each value
-    .map(label => label.trim())
+    .map((label) => label.trim())
     // remove empty value
-    .filter(label => label.trim().length)
+    .filter((label) => label.trim().length)
   const payload = {
     success: {
       state: 'success',
@@ -78,7 +78,7 @@ export async function checkLabel(event, context, callback) {
 
   // loop through PR labels to see if we found one which should block the PR
   const validation = body.pull_request.labels.every(({ name }) => {
-    if (blockLabels.find(blockLabel => blockLabel === name)) {
+    if (blockLabels.find((blockLabel) => blockLabel === name)) {
       console.log('Fail: at least one blocked label found')
 
       return false
