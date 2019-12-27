@@ -24,7 +24,7 @@ We have 3 functions available:
 
 ## Prerequisites
 
-- Node.js 10.17
+- Node.js 12
 - Serverless CLI v1.57.0 or later (`npm install -g serverless`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
