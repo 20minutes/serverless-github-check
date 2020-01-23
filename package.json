@@ -23,7 +23,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.18.0",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "jest-cli": "^25.1.0",
     "regenerator-runtime": "^0.13.3",
     "serverless-offline": "^5.12.1",
