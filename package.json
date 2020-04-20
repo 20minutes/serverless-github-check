@@ -24,7 +24,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.19.0",
     "jest": "^25.3.0",
-    "jest-cli": "^25.1.0",
+    "jest-cli": "^25.4.0",
     "regenerator-runtime": "^0.13.5",
     "serverless-offline": "^6.1.4",
     "serverless-webpack": "^5.1.0",
