@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "octonode": "^0.9.5",
-    "source-map-support": "^0.5.17"
+    "source-map-support": "^0.5.18"
   },
   "jest": {
     "clearMocks": true,
