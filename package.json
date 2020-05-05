@@ -27,7 +27,7 @@
     "jest-cli": "^26.0.0",
     "regenerator-runtime": "^0.13.5",
     "serverless-offline": "^6.1.4",
-    "serverless-webpack": "^5.1.0",
+    "serverless-webpack": "^5.3.2",
     "webpack": "^4.43.0",
     "webpack-node-externals": "^1.6.0"
   },
