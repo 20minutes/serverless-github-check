@@ -152,7 +152,7 @@
   dependencies:
     "@babel/types" "^7.10.1"
 
-"@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.10.1":
+"@babel/helper-module-imports@^7.10.1":
   version "7.10.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.10.1.tgz#dd331bd45bccc566ce77004e9d05fe17add13876"
   integrity sha512-SFxgwYmZ3HZPyZwJRiVNLRHWuW2OgE5k2nrVs6D9Iv4PPnXVffuEHy83Sfx/l4SqF+5kyJXjAyUmrG7tNm+qVg==
@@ -1955,12 +1955,12 @@ babel-plugin-jest-hoist@^26.0.0:
     "@babel/types" "^7.3.3"
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-source-map-support@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-source-map-support/-/babel-plugin-source-map-support-2.1.1.tgz#9cd9b21429fb5dbf10670817050789c644d4c31d"
-  integrity sha512-Ce0r4iXS/1JX8gjzZcfzw17Pooh7zIkbLFTljuhWPTneNWQ9RauomiutInvz5kmd8tYrZ9axgGq9dm0hml2+Lg==
+babel-plugin-source-map-support@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-source-map-support/-/babel-plugin-source-map-support-2.1.2.tgz#7df113ed04b91263cb2d271c410a70bad6926099"
+  integrity sha512-vGQpazaev8LHLcr91C5tyDy4sCEghetZJU0W6UyfkcWsqt7JNtRdwuuh3JwfnSPzQ63OzSWyLtIKNvzfPRZb2Q==
   dependencies:
-    "@babel/helper-module-imports" "^7.0.0"
+    "@babel/helper-module-imports" "^7.10.1"
 
 babel-preset-current-node-syntax@^0.1.2:
   version "0.1.2"
