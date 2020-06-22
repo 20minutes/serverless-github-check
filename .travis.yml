@@ -1,9 +1,11 @@
+os: linux
+dist: xenial
 language: node_js
 
-cache:
-    yarn: true
-    directories:
-        - node_modules
+# avoid double Travis build when the PR is created on upstream
+if: |
+    type = pull_request OR \
+    branch = master
 
 env:
     global:
