@@ -1,6 +1,5 @@
 {
   "name": "serverless-github-check",
-  "version": "1.2.1",
   "main": "handler.js",
   "scripts": {
     "test": "jest",
@@ -13,7 +12,6 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.10.3",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-source-map-support": "^2.1.2",
     "eslint": "^7.3.1",
@@ -24,7 +22,6 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.0",
     "jest": "^26.1.0",
-    "jest-cli": "^26.0.0",
     "regenerator-runtime": "^0.13.5",
     "serverless-offline": "^6.4.0",
     "serverless-webpack": "^5.3.2",
