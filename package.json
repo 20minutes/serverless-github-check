@@ -18,7 +18,7 @@
     "eslint-config-20minutes": "^1.0.9",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-babel": "^5.2.1",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.0",
     "jest": "^26.1.0",
