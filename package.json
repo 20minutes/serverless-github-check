@@ -28,7 +28,7 @@
     "webpack-node-externals": "^2.3.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
+    "@babel/runtime": "^7.10.5",
     "octonode": "^0.9.5",
     "source-map-support": "^0.5.19"
   },
