@@ -22,7 +22,7 @@
     "eslint-plugin-react": "^7.20.3",
     "jest": "^26.1.0",
     "regenerator-runtime": "^0.13.5",
-    "serverless-offline": "^6.4.0",
+    "serverless-offline": "^6.5.0",
     "serverless-webpack": "^5.3.2",
     "webpack": "^4.43.0",
     "webpack-node-externals": "^2.5.0"
