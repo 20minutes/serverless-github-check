@@ -13,7 +13,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-source-map-support": "^2.1.2",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "eslint-config-20minutes": "^1.0.9",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-babel": "^5.3.1",
