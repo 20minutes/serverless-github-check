@@ -20,7 +20,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.3",
-    "jest": "^26.4.2",
+    "jest": "^26.5.2",
     "regenerator-runtime": "^0.13.7",
     "serverless-offline": "^6.8.0",
     "serverless-webpack": "^5.3.5",
