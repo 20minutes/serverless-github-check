@@ -12,5 +12,4 @@ updates:
   ignore:
   - dependency-name: webpack
     versions:
-    - ">= 5.a"
-    - "< 6"
+    - ">= 5.0.0"
