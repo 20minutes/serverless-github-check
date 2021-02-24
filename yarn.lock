@@ -3261,10 +3261,10 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-20minutes@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/eslint-config-20minutes/-/eslint-config-20minutes-1.0.9.tgz#7275d0e5caec38ac7e1a51365a724794237e88a4"
-  integrity sha512-JFoS1ve27t9Qpi4iNb5V14iTzmoSJ2+7sHGcmhNlj9IiLCz6N7Ii2viq2CsZG9FfGaK/i0xyYuSGRtp5snneNw==
+eslint-config-20minutes@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-20minutes/-/eslint-config-20minutes-1.1.0.tgz#a0b1163eb01356df36b6a0cebf5a7eb46c81bc3d"
+  integrity sha512-Tzhz7wcw9pmLnPbQ03VJjJvkjblA3g8vfJgHenGXsbAQqTu7fuHg0i5/guyoVETxsBQ7rvQz0WVyOHfhcpbYHw==
 
 eslint-config-airbnb-base@^14.2.1:
   version "14.2.1"
