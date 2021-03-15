@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "octonode": "^0.10.0",
+    "octonode": "^0.10.2",
     "source-map-support": "^0.5.19"
   },
   "jest": {

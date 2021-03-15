@@ -5836,10 +5836,10 @@ object.values@^1.1.1:
     es-abstract "^1.18.0-next.2"
     has "^1.0.3"
 
-octonode@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/octonode/-/octonode-0.10.0.tgz#e5289135f16453b05c2812e69a2945df36a11949"
-  integrity sha512-XnB9zEK8hWYsVaoq8G/RnNOTSl+kwi0lSx4DEqjxtKc6PkkiT5ZiIUufcjtDQ0pZJsVpwWhUd6ZOhpoIVBOAwA==
+octonode@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/octonode/-/octonode-0.10.2.tgz#2b773866f44f03a2c544741d9b0df2d2c1b4f0cf"
+  integrity sha512-lxKJxAvrw3BuM0Wu3A/TRyFkYxMFWbMm8p7fDO3EoG9KDgOy53d91bjlGR1mmNk1EoF5LjGBx7BmIB+PfmMKLQ==
   dependencies:
     bluebird "^3.5.0"
     deep-extend "^0.6.0"
