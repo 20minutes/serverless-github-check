@@ -8,7 +8,7 @@
   "author": "20 Minutes <web-tech@20minutes.fr>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.14.6",
+    "@babel/core": "^7.14.8",
     "@babel/eslint-parser": "^7.14.7",
     "@babel/preset-env": "^7.14.8",
     "babel-loader": "^8.2.2",
