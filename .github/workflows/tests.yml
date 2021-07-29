@@ -1,0 +1,45 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install
+        run: yarn install
+        env:
+          CI: true
+          TZ: 'Europe/Paris'
+          NODE_ENV: 'test'
+
+      - name: lint
+        run: yarn lint
+        env:
+          CI: true
+          TZ: 'Europe/Paris'
+          NODE_ENV: 'test'
+
+      - name: test
+        run: yarn test
+        env:
+          CI: true
+          TZ: 'Europe/Paris'
+          NODE_ENV: 'test'
