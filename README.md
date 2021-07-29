@@ -1,7 +1,7 @@
 # Serverless GitHub Check
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com/)
-[![Build Status](https://travis-ci.com/20minutes/serverless-github-check.svg?branch=master)](https://travis-ci.com/20minutes/serverless-github-check)
+[![Build Status](https://github.com/20minutes/serverless-github-check/actions/workflows/tests.yml/badge.svg)](https://github.com/20minutes/serverless-github-check/actions/workflows/tests.yml)
 
 Apply some simple checks on each PR.
 
