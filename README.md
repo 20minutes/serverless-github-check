@@ -1,7 +1,7 @@
 # Serverless GitHub Check
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com/)
-[![Build Status](https://travis-ci.com/20minutes/serverless-github-check.svg?branch=master)](https://travis-ci.com/20minutes/serverless-github-check)
+[![Build Status](https://github.com/20minutes/serverless-github-check/actions/workflows/tests.yml/badge.svg)](https://github.com/20minutes/serverless-github-check/actions/workflows/tests.yml)
 
 Apply some simple checks on each PR.
 
@@ -25,7 +25,7 @@ We have 3 functions available:
 ## Prerequisites
 
 - Node.js 12
-- Serverless CLI v1.57.0 or later (`npm install -g serverless`)
+- Serverless CLI v1.81.0 or later (`npm install -g serverless`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 
