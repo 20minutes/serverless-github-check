@@ -9,7 +9,3 @@ updates:
   open-pull-requests-limit: 10
   reviewers:
   - j0k3r
-  ignore:
-  - dependency-name: webpack
-    versions:
-    - ">= 5.0.0"
