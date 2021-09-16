@@ -27,7 +27,7 @@ export async function checkLabel(event, context, callback) {
   const body = JSON.parse(event.body)
 
   // when creating the webhook
-  if (body && ('hook' in body)) {
+  if (body && 'hook' in body) {
     try {
       const message = validateWebhook(body)
 
@@ -47,7 +47,7 @@ export async function checkLabel(event, context, callback) {
     }
   }
 
-  if (!(body && ('pull_request' in body))) {
+  if (!(body && 'pull_request' in body)) {
     response = {
       statusCode: 500,
       body: 'Event is not a Pull Request',

@@ -26,10 +26,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'issue',
-          'push',
-        ],
+        events: ['issue', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -54,10 +51,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -82,10 +76,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       organization: {
         login: '20minutes',
@@ -130,9 +121,11 @@ describe('Validating label', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
-        labels: [{
-          name: 'wip',
-        }],
+        labels: [
+          {
+            name: 'wip',
+          },
+        ],
       },
       repository: {
         full_name: 'foo/bar',
@@ -172,13 +165,17 @@ describe('Validating label', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
-        labels: [{
-          name: 'foo',
-        }, {
-          name: 'wip',
-        }, {
-          name: 'bar',
-        }],
+        labels: [
+          {
+            name: 'foo',
+          },
+          {
+            name: 'wip',
+          },
+          {
+            name: 'bar',
+          },
+        ],
       },
       repository: {
         full_name: 'foo/bar',
@@ -258,9 +255,11 @@ describe('Validating label', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
-        labels: [{
-          name: 'ready!',
-        }],
+        labels: [
+          {
+            name: 'ready!',
+          },
+        ],
       },
       repository: {
         full_name: 'foo/bar',
@@ -300,9 +299,11 @@ describe('Validating label', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
-        labels: [{
-          name: 'work in progre',
-        }],
+        labels: [
+          {
+            name: 'work in progre',
+          },
+        ],
       },
       repository: {
         full_name: 'foo/bar',
@@ -343,9 +344,11 @@ describe('Validating label', () => {
         head: {
           sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         },
-        labels: [{
-          name: 'wip',
-        }],
+        labels: [
+          {
+            name: 'wip',
+          },
+        ],
       },
       repository: {
         full_name: 'foo/bar',
