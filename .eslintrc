@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": "20minutes"
+  "extends": "@20minutes"
 }

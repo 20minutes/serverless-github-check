@@ -11,7 +11,7 @@ export function validateWebhook(body, requiredEvent = 'pull_request') {
     throw new Error(`This webhook needs the "${requiredEvent}" event. Please tick it.`)
   }
 
-  if (('organization' in body)) {
+  if ('organization' in body) {
     return `Hello ${body.sender.login}, the webhook is now enabled for the organization ${body.organization.login}, enjoy!`
   }
 
@@ -31,10 +31,7 @@ export async function updateStatus(githubClient, body, payload) {
   try {
     await githubClient
       .repo(body.repository.full_name)
-      .statusAsync(
-        body.pull_request.head.sha,
-        payload,
-      )
+      .statusAsync(body.pull_request.head.sha, payload)
 
     return {
       statusCode: 204,

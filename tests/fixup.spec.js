@@ -25,10 +25,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'issue',
-          'push',
-        ],
+        events: ['issue', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -53,10 +50,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       repository: {
         full_name: '20minutes/serverless-github-check',
@@ -81,10 +75,7 @@ describe('Validating GitHub event', () => {
       zen: 'Speak like a human.',
       hook_id: 1,
       hook: {
-        events: [
-          'pull_request',
-          'push',
-        ],
+        events: ['pull_request', 'push'],
       },
       organization: {
         login: '20minutes',
@@ -121,30 +112,42 @@ describe('Fixup commits check', () => {
             expect(baseSha).toBeDefined()
             expect(headSha).toBeDefined()
 
-            return [{
-              commits: [{
-                commit: {
-                  message: 'is fine',
-                },
-                parents: [{
-                  sha: '11111111111',
-                }],
-              }, {
-                commit: {
-                  message: 'is ok',
-                },
-                parents: [{
-                  sha: '22222222222',
-                }],
-              }, {
-                commit: {
-                  message: 'fixup! 5555555555555',
-                },
-                parents: [{
-                  sha: '333333333333',
-                }],
-              }],
-            }]
+            return [
+              {
+                commits: [
+                  {
+                    commit: {
+                      message: 'is fine',
+                    },
+                    parents: [
+                      {
+                        sha: '11111111111',
+                      },
+                    ],
+                  },
+                  {
+                    commit: {
+                      message: 'is ok',
+                    },
+                    parents: [
+                      {
+                        sha: '22222222222',
+                      },
+                    ],
+                  },
+                  {
+                    commit: {
+                      message: 'fixup! 5555555555555',
+                    },
+                    parents: [
+                      {
+                        sha: '333333333333',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]
           }),
         }
       }),
@@ -192,23 +195,32 @@ describe('Fixup commits check', () => {
             expect(baseSha).toBeDefined()
             expect(headSha).toBeDefined()
 
-            return [{
-              commits: [{
-                commit: {
-                  message: 'New feature',
-                },
-                parents: [{
-                  sha: '123123123',
-                }],
-              }, {
-                commit: {
-                  message: 'fix feature',
-                },
-                parents: [{
-                  sha: '4564564566',
-                }],
-              }],
-            }]
+            return [
+              {
+                commits: [
+                  {
+                    commit: {
+                      message: 'New feature',
+                    },
+                    parents: [
+                      {
+                        sha: '123123123',
+                      },
+                    ],
+                  },
+                  {
+                    commit: {
+                      message: 'fix feature',
+                    },
+                    parents: [
+                      {
+                        sha: '4564564566',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]
           }),
         }
       }),
@@ -256,18 +268,25 @@ describe('Fixup commits check', () => {
             expect(baseSha).toBeDefined()
             expect(headSha).toBeDefined()
 
-            return [{
-              commits: [{
-                commit: {
-                  message: 'new feature',
-                },
-                parents: [{
-                  sha: '123123123',
-                }, {
-                  sha: '456456456',
-                }],
-              }],
-            }]
+            return [
+              {
+                commits: [
+                  {
+                    commit: {
+                      message: 'new feature',
+                    },
+                    parents: [
+                      {
+                        sha: '123123123',
+                      },
+                      {
+                        sha: '456456456',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]
           }),
         }
       }),
