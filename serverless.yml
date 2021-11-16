@@ -48,7 +48,7 @@ functions:
         description: Check for GitHub PR labels to block merge
         environment:
             # coma separated labels
-            BLOCK_LABELS: "Work In Progress,Waiting For Change,Waiting For Travis"
+            BLOCK_LABELS: "Work In Progress,Waiting For Change,Waiting For Travis,Do Not Merge"
         events:
             -
                 http:
