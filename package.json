@@ -25,7 +25,7 @@
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
-    "serverless-offline": "^8.2.0",
+    "serverless-offline": "^8.3.0",
     "serverless-webpack": "^5.5.5",
     "webpack": "^5.64.2",
     "webpack-node-externals": "^3.0.0"
