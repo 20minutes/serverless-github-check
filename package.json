@@ -23,7 +23,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "jest": "^27.3.1",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.0",
     "regenerator-runtime": "^0.13.9",
     "serverless-offline": "^8.3.1",
     "serverless-webpack": "^5.6.0",
