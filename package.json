@@ -10,7 +10,7 @@
   "devDependencies": {
     "@20minutes/eslint-config": "^1.2.3",
     "@babel/core": "^7.16.5",
-    "@babel/eslint-parser": "^7.16.3",
+    "@babel/eslint-parser": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "babel-loader": "^8.2.3",
     "babel-plugin-source-map-support": "^2.1.3",
