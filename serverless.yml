@@ -25,7 +25,7 @@ custom:
 
 functions:
     specification:
-        handler: handler.checkSpecification
+        handler: functions/specification.handler
         description: Validate GitHub PRs against some specifications
         environment:
             CHECK_BODY_LENGTH: 8
@@ -44,7 +44,7 @@ functions:
                     cors: true
 
     label:
-        handler: handler.checkLabel
+        handler: functions/label.handler
         description: Check for GitHub PR labels to block merge
         environment:
             # coma separated labels
@@ -57,7 +57,7 @@ functions:
                     cors: true
 
     fixup:
-        handler: handler.checkFixupCommits
+        handler: functions/fixup.handler
         description: Ensure no "fixup!" commits are in the PR
         events:
             -

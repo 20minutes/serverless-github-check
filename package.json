@@ -3,7 +3,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint functions/ tests/ handler.js"
+    "lint": "eslint functions/ tests/"
   },
   "author": "20 Minutes <web-tech@20minutes.fr>",
   "license": "MIT",
