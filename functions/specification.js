@@ -44,7 +44,7 @@ export async function handler(event, context, callback) {
   const payload = {
     state: 'success',
     description: 'Specification passed',
-    context: `${process.env.NAMESPACE} - PR Specification`,
+    context: `${process.env.NAMESPACE} / PR Specification`,
   }
 
   if (body.pull_request.title.length < process.env.CHECK_TITLE_LENGTH) {

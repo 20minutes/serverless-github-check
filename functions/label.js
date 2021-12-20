@@ -15,12 +15,12 @@ export async function handler(event, context, callback) {
     success: {
       state: 'success',
       description: 'Label validation passed',
-      context: `${process.env.NAMESPACE} - Label validation`,
+      context: `${process.env.NAMESPACE} / Label validation`,
     },
     failure: {
       state: 'failure',
       description: 'Label validation failed',
-      context: `${process.env.NAMESPACE} - Label validation`,
+      context: `${process.env.NAMESPACE} / Label validation`,
     },
   }
 

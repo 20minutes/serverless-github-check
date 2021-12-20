@@ -136,7 +136,7 @@ describe('Fixup commits check', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - Fixup check')
+        expect(body.context).toBe('20 Minutes / Fixup check')
         expect(body.description).toBeDefined()
 
         return true
@@ -206,7 +206,7 @@ describe('Fixup commits check', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Fixup check')
+        expect(body.context).toBe('20 Minutes / Fixup check')
         expect(body.description).toBeDefined()
 
         return true
@@ -269,7 +269,7 @@ describe('Fixup commits check', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Fixup check')
+        expect(body.context).toBe('20 Minutes / Fixup check')
         expect(body.description).toBeDefined()
 
         return true
