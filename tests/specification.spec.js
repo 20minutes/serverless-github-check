@@ -1,5 +1,5 @@
 import { client } from 'octonode'
-import { checkSpecification } from '../functions/specification'
+import { handler } from '../functions/specification'
 
 jest.mock('octonode')
 
@@ -12,7 +12,7 @@ describe('Validating GitHub event', () => {
   test('bad event body', async () => {
     const callback = jest.fn()
 
-    await checkSpecification({ body: '{}' }, {}, callback)
+    await handler({ body: '{}' }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -37,7 +37,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -62,7 +62,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -87,7 +87,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -128,7 +128,7 @@ describe('Validating specification', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -167,7 +167,7 @@ describe('Validating specification', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -206,7 +206,7 @@ describe('Validating specification', () => {
       },
     }
 
-    await checkSpecification({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {

@@ -1,5 +1,5 @@
 import { client } from 'octonode'
-import { checkLabel } from '../functions/label'
+import { handler } from '../functions/label'
 
 jest.mock('octonode')
 
@@ -11,7 +11,7 @@ describe('Validating GitHub event', () => {
   test('bad event body', async () => {
     const callback = jest.fn()
 
-    await checkLabel({ body: '{}' }, {}, callback)
+    await handler({ body: '{}' }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -36,7 +36,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -61,7 +61,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -86,7 +86,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -132,7 +132,7 @@ describe('Validating label', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -182,7 +182,7 @@ describe('Validating label', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -222,7 +222,7 @@ describe('Validating label', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -266,7 +266,7 @@ describe('Validating label', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -310,7 +310,7 @@ describe('Validating label', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -355,7 +355,7 @@ describe('Validating label', () => {
       },
     }
 
-    await checkLabel({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {

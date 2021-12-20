@@ -1,5 +1,5 @@
 import { client } from 'octonode'
-import { checkFixupCommits } from '../functions/fixup'
+import { handler } from '../functions/fixup'
 
 jest.mock('octonode')
 
@@ -10,7 +10,7 @@ describe('Validating GitHub event', () => {
   test('bad event body', async () => {
     const callback = jest.fn()
 
-    await checkFixupCommits({ body: '{}' }, {}, callback)
+    await handler({ body: '{}' }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -35,7 +35,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkFixupCommits({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -60,7 +60,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkFixupCommits({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -85,7 +85,7 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await checkFixupCommits({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -170,7 +170,7 @@ describe('Fixup commits check', () => {
       },
     }
 
-    await checkFixupCommits({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -243,7 +243,7 @@ describe('Fixup commits check', () => {
       },
     }
 
-    await checkFixupCommits({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
@@ -309,7 +309,7 @@ describe('Fixup commits check', () => {
       },
     }
 
-    await checkFixupCommits({ body: JSON.stringify(githubEvent) }, {}, callback)
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
