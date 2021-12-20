@@ -1,7 +1,5 @@
-import { client } from 'octonode'
+import nock from 'nock'
 import { handler } from '../functions/fixup'
-
-jest.mock('octonode')
 
 // mimic serverless environment variables
 process.env.NAMESPACE = '20 Minutes'
@@ -97,61 +95,54 @@ describe('Validating GitHub event', () => {
 
 describe('Fixup commits check', () => {
   test('got a fixup commit', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
-
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - Fixup check')
-            expect(payload.description).toBeDefined()
-          }),
-          compareAsync: jest.fn((baseSha, headSha) => {
-            expect(baseSha).toBeDefined()
-            expect(headSha).toBeDefined()
-
-            return [
+    nock('https://api.github.com')
+      .get(
+        '/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511'
+      )
+      .reply(200, {
+        commits: [
+          {
+            commit: {
+              message: 'is fine',
+            },
+            parents: [
               {
-                commits: [
-                  {
-                    commit: {
-                      message: 'is fine',
-                    },
-                    parents: [
-                      {
-                        sha: '11111111111',
-                      },
-                    ],
-                  },
-                  {
-                    commit: {
-                      message: 'is ok',
-                    },
-                    parents: [
-                      {
-                        sha: '22222222222',
-                      },
-                    ],
-                  },
-                  {
-                    commit: {
-                      message: 'fixup! 5555555555555',
-                    },
-                    parents: [
-                      {
-                        sha: '333333333333',
-                      },
-                    ],
-                  },
-                ],
+                sha: '11111111111',
               },
-            ]
-          }),
-        }
-      }),
-    })
+            ],
+          },
+          {
+            commit: {
+              message: 'is ok',
+            },
+            parents: [
+              {
+                sha: '22222222222',
+              },
+            ],
+          },
+          {
+            commit: {
+              message: 'fixup! 5555555555555',
+            },
+            parents: [
+              {
+                sha: '333333333333',
+              },
+            ],
+          },
+        ],
+      })
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes - Fixup check')
+        expect(body.description).toBeDefined()
+
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -166,7 +157,11 @@ describe('Fixup commits check', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -180,51 +175,44 @@ describe('Fixup commits check', () => {
   })
 
   test('got a non-fixup commit', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
-
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - Fixup check')
-            expect(payload.description).toBeDefined()
-          }),
-          compareAsync: jest.fn((baseSha, headSha) => {
-            expect(baseSha).toBeDefined()
-            expect(headSha).toBeDefined()
-
-            return [
+    nock('https://api.github.com')
+      .get(
+        '/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511'
+      )
+      .reply(200, {
+        commits: [
+          {
+            commit: {
+              message: 'New feature',
+            },
+            parents: [
               {
-                commits: [
-                  {
-                    commit: {
-                      message: 'New feature',
-                    },
-                    parents: [
-                      {
-                        sha: '123123123',
-                      },
-                    ],
-                  },
-                  {
-                    commit: {
-                      message: 'fix feature',
-                    },
-                    parents: [
-                      {
-                        sha: '4564564566',
-                      },
-                    ],
-                  },
-                ],
+                sha: '123123123',
               },
-            ]
-          }),
-        }
-      }),
-    })
+            ],
+          },
+          {
+            commit: {
+              message: 'fix feature',
+            },
+            parents: [
+              {
+                sha: '4564564566',
+              },
+            ],
+          },
+        ],
+      })
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('20 Minutes - Fixup check')
+        expect(body.description).toBeDefined()
+
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -239,7 +227,11 @@ describe('Fixup commits check', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -253,44 +245,37 @@ describe('Fixup commits check', () => {
   })
 
   test('got a merge commit', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
-
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - Fixup check')
-            expect(payload.description).toBeDefined()
-          }),
-          compareAsync: jest.fn((baseSha, headSha) => {
-            expect(baseSha).toBeDefined()
-            expect(headSha).toBeDefined()
-
-            return [
+    nock('https://api.github.com')
+      .get(
+        '/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511'
+      )
+      .reply(200, {
+        commits: [
+          {
+            commit: {
+              message: 'new feature',
+            },
+            parents: [
               {
-                commits: [
-                  {
-                    commit: {
-                      message: 'new feature',
-                    },
-                    parents: [
-                      {
-                        sha: '123123123',
-                      },
-                      {
-                        sha: '456456456',
-                      },
-                    ],
-                  },
-                ],
+                sha: '123123123',
               },
-            ]
-          }),
-        }
-      }),
-    })
+              {
+                sha: '456456456',
+              },
+            ],
+          },
+        ],
+      })
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('20 Minutes - Fixup check')
+        expect(body.description).toBeDefined()
+
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -305,7 +290,11 @@ describe('Fixup commits check', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 

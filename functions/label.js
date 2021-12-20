@@ -1,9 +1,9 @@
-import { client } from 'octonode'
+import { Octokit } from '@octokit/rest'
 import { updateStatus, validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
   let response
-  const githubClient = client(process.env.GITHUB_TOKEN)
+  const githubClient = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const blockLabels = process.env.BLOCK_LABELS
     // convert to array
     .split(',')
