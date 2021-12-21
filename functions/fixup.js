@@ -8,12 +8,12 @@ export async function handler(event, context, callback) {
     success: {
       state: 'success',
       description: 'No fixup commits in history',
-      context: `${process.env.NAMESPACE} / Fixup check`,
+      context: `${process.env.NAMESPACE} - Fixup check`,
     },
     failure: {
       state: 'failure',
       description: 'Fixup commits in history, please squash them!',
-      context: `${process.env.NAMESPACE} / Fixup check`,
+      context: `${process.env.NAMESPACE} - Fixup check`,
     },
   }
 

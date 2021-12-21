@@ -99,7 +99,7 @@ describe('Validating label', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.context).toBe('20 Minutes - Label validation')
         expect(body.description).toBeDefined()
 
         return true
@@ -143,7 +143,7 @@ describe('Validating label', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.context).toBe('20 Minutes - Label validation')
         expect(body.description).toBeDefined()
 
         return true
@@ -193,7 +193,7 @@ describe('Validating label', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.context).toBe('20 Minutes - Label validation')
         expect(body.description).toBeDefined()
 
         return true
@@ -233,7 +233,7 @@ describe('Validating label', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.context).toBe('20 Minutes - Label validation')
         expect(body.description).toBeDefined()
 
         return true
@@ -277,7 +277,7 @@ describe('Validating label', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.context).toBe('20 Minutes - Label validation')
         expect(body.description).toBeDefined()
 
         return true
@@ -323,7 +323,7 @@ describe('Validating label', () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.context).toBe('20 Minutes - Label validation')
         expect(body.description).toBeDefined()
 
         return true
