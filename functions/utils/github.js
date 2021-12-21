@@ -21,7 +21,7 @@ export function validateWebhook(body, requiredEvent = 'pull_request') {
 /**
  * Update the GitHub PR Status with the given payload
  *
- * @param object githubClient GitHub client from octonode
+ * @param object githubClient GitHub client from @octokit
  * @param object body         JSON body from GitHub event
  * @param object payload      Object to update PR (keys: status, description, context)
  *
@@ -29,9 +29,12 @@ export function validateWebhook(body, requiredEvent = 'pull_request') {
  */
 export async function updateStatus(githubClient, body, payload) {
   try {
-    await githubClient
-      .repo(body.repository.full_name)
-      .statusAsync(body.pull_request.head.sha, payload)
+    await githubClient.rest.repos.createCommitStatus({
+      owner: body.repository.owner.login,
+      repo: body.repository.name,
+      sha: body.pull_request.head.sha,
+      ...payload,
+    })
 
     return {
       statusCode: 204,

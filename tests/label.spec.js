@@ -1,7 +1,5 @@
-import { client } from 'octonode'
+import nock from 'nock'
 import { handler } from '../functions/label'
-
-jest.mock('octonode')
 
 // mimic serverless environment variables
 process.env.NAMESPACE = '20 Minutes'
@@ -98,20 +96,16 @@ describe('Validating GitHub event', () => {
 
 describe('Validating label', () => {
   test('got a blocking label', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - Label validation')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -128,7 +122,11 @@ describe('Validating label', () => {
         ],
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -142,20 +140,16 @@ describe('Validating label', () => {
   })
 
   test('got a blocking label in multiple labels', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - Label validation')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -178,7 +172,11 @@ describe('Validating label', () => {
         ],
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -192,20 +190,16 @@ describe('Validating label', () => {
   })
 
   test('no label found in the PR', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - Label validation')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -218,7 +212,11 @@ describe('Validating label', () => {
         labels: [],
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -232,20 +230,16 @@ describe('Validating label', () => {
   })
 
   test('no blocking label found', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - Label validation')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -262,7 +256,11 @@ describe('Validating label', () => {
         ],
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -276,20 +274,16 @@ describe('Validating label', () => {
   })
 
   test('no blocking label found (with partial label)', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - Label validation')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -306,7 +300,11 @@ describe('Validating label', () => {
         ],
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -321,20 +319,17 @@ describe('Validating label', () => {
 
   test('no blocking label defined', async () => {
     process.env.BLOCK_LABELS = ''
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - Label validation')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('20 Minutes / Label validation')
+        expect(body.description).toBeDefined()
+
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -351,7 +346,11 @@ describe('Validating label', () => {
         ],
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 

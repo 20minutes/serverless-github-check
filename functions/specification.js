@@ -1,9 +1,9 @@
-import { client } from 'octonode'
+import { Octokit } from '@octokit/rest'
 import { updateStatus, validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
   let response
-  const githubClient = client(process.env.GITHUB_TOKEN)
+  const githubClient = new Octokit({ auth: process.env.GITHUB_TOKEN })
 
   const body = JSON.parse(event.body)
 
@@ -44,7 +44,7 @@ export async function handler(event, context, callback) {
   const payload = {
     state: 'success',
     description: 'Specification passed',
-    context: `${process.env.NAMESPACE} - PR Specification`,
+    context: `${process.env.NAMESPACE} / PR Specification`,
   }
 
   if (body.pull_request.title.length < process.env.CHECK_TITLE_LENGTH) {

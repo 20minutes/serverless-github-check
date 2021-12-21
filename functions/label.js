@@ -1,9 +1,9 @@
-import { client } from 'octonode'
+import { Octokit } from '@octokit/rest'
 import { updateStatus, validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
   let response
-  const githubClient = client(process.env.GITHUB_TOKEN)
+  const githubClient = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const blockLabels = process.env.BLOCK_LABELS
     // convert to array
     .split(',')
@@ -15,12 +15,12 @@ export async function handler(event, context, callback) {
     success: {
       state: 'success',
       description: 'Label validation passed',
-      context: `${process.env.NAMESPACE} - Label validation`,
+      context: `${process.env.NAMESPACE} / Label validation`,
     },
     failure: {
       state: 'failure',
       description: 'Label validation failed',
-      context: `${process.env.NAMESPACE} - Label validation`,
+      context: `${process.env.NAMESPACE} / Label validation`,
     },
   }
 

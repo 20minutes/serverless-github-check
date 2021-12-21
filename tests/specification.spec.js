@@ -1,7 +1,5 @@
-import { client } from 'octonode'
+import nock from 'nock'
 import { handler } from '../functions/specification'
-
-jest.mock('octonode')
 
 // mimic serverless environment variables
 process.env.NAMESPACE = '20 Minutes'
@@ -99,20 +97,16 @@ describe('Validating GitHub event', () => {
 
 describe('Validating specification', () => {
   test('title is too short', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes / PR Specification')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - PR Specification')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -124,7 +118,11 @@ describe('Validating specification', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -138,20 +136,16 @@ describe('Validating specification', () => {
   })
 
   test('body is too short', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes / PR Specification')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('failure')
-            expect(payload.context).toBe('20 Minutes - PR Specification')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -163,7 +157,11 @@ describe('Validating specification', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 
@@ -177,20 +175,16 @@ describe('Validating specification', () => {
   })
 
   test('body and title are OK', async () => {
-    client.mockReturnValue({
-      repo: jest.fn((params) => {
-        expect(params).toBe('foo/bar')
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('success')
+        expect(body.context).toBe('20 Minutes / PR Specification')
+        expect(body.description).toBeDefined()
 
-        return {
-          statusAsync: jest.fn((commit, payload) => {
-            expect(commit).toBe('ee55a1223ce20c3e7cb776349cb7f8efb7b88511')
-            expect(payload.state).toBe('success')
-            expect(payload.context).toBe('20 Minutes - PR Specification')
-            expect(payload.description).toBeDefined()
-          }),
-        }
-      }),
-    })
+        return true
+      })
+      .reply(200)
+
     const callback = jest.fn()
     const githubEvent = {
       pull_request: {
@@ -202,7 +196,11 @@ describe('Validating specification', () => {
         },
       },
       repository: {
+        name: 'bar',
         full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
       },
     }
 

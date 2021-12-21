@@ -1,19 +1,19 @@
-import { client } from 'octonode'
+import { Octokit } from '@octokit/rest'
 import { updateStatus, validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
   let response
-  const githubClient = client(process.env.GITHUB_TOKEN)
+  const githubClient = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const payload = {
     success: {
       state: 'success',
       description: 'No fixup commits in history',
-      context: `${process.env.NAMESPACE} - Fixup check`,
+      context: `${process.env.NAMESPACE} / Fixup check`,
     },
     failure: {
       state: 'failure',
       description: 'Fixup commits in history, please squash them!',
-      context: `${process.env.NAMESPACE} - Fixup check`,
+      context: `${process.env.NAMESPACE} / Fixup check`,
     },
   }
 
@@ -51,12 +51,14 @@ export async function handler(event, context, callback) {
 
   console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
-  const compare = await githubClient
-    .repo(body.repository.full_name)
-    .compareAsync(body.pull_request.base.sha, body.pull_request.head.sha)
+  const compare = await githubClient.rest.repos.compareCommitsWithBasehead({
+    owner: body.repository.owner.login,
+    repo: body.repository.name,
+    basehead: `${body.pull_request.base.sha}...${body.pull_request.head.sha}`,
+  })
 
   // loop through PR labels to see if we found one which should block the PR
-  const validation = compare[0].commits.every(({ commit, parents }) => {
+  const validation = compare.data.commits.every(({ commit, parents }) => {
     const isMerge = parents && parents.length > 1
 
     if (isMerge) {
