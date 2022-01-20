@@ -9,7 +9,7 @@
   "license": "MIT",
   "devDependencies": {
     "@20minutes/eslint-config": "^1.2.3",
-    "@babel/core": "^7.16.7",
+    "@babel/core": "^7.16.10",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/preset-env": "^7.16.8",
     "babel-loader": "^8.2.3",
