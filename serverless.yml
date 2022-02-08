@@ -1,6 +1,8 @@
-frameworkVersion: ">=1.81.0 <2.0.0"
+frameworkVersion: "2"
 
 service: serverless-github-check
+# https://www.serverless.com/framework/docs/deprecations/#NEW_VARIABLES_RESOLVER
+variablesResolutionMode: 20210326
 
 plugins:
     - serverless-webpack
@@ -16,7 +18,7 @@ provider:
     environment:
         NAMESPACE: 20 Minutes
         # SecureString from SSM Parameters
-        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN~true}
+        GITHUB_TOKEN: ${ssm:GITHUB_TOKEN}
 
 custom:
     webpack:
