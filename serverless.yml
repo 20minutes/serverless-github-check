@@ -1,8 +1,6 @@
-frameworkVersion: "2"
+frameworkVersion: "3"
 
 service: serverless-github-check
-# https://www.serverless.com/framework/docs/deprecations/#NEW_VARIABLES_RESOLVER
-variablesResolutionMode: 20210326
 
 plugins:
     - serverless-webpack
