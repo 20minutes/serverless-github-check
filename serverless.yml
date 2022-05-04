@@ -1,4 +1,4 @@
-frameworkVersion: "3"
+frameworkVersion: ">=3.16.0"
 
 service: serverless-github-check
 
@@ -13,6 +13,7 @@ provider:
     region: ${opt:region, 'eu-west-1'}
     logRetentionInDays: 30
     versionFunctions: false
+    deploymentMethod: direct
     environment:
         NAMESPACE: 20 Minutes
         # SecureString from SSM Parameters
