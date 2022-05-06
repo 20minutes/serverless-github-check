@@ -8,7 +8,7 @@ plugins:
 
 provider:
     name: aws
-    runtime: nodejs12.x
+    runtime: nodejs14.x
     profile: default
     region: ${opt:region, 'eu-west-1'}
     logRetentionInDays: 30
@@ -49,7 +49,7 @@ functions:
         description: Check for GitHub PR labels to block merge
         environment:
             # coma separated labels
-            BLOCK_LABELS: "Work In Progress,Waiting For Change,Waiting For Travis,Do Not Merge"
+            BLOCK_LABELS: "Work In Progress,Waiting For Change,Waiting For Travis,Do Not Merge,Blocked"
         events:
             -
                 http:
