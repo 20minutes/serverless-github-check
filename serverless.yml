@@ -14,6 +14,7 @@ provider:
     logRetentionInDays: 30
     versionFunctions: false
     deploymentMethod: direct
+    architecture: arm64
     environment:
         NAMESPACE: 20 Minutes
         # SecureString from SSM Parameters
