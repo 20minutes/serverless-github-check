@@ -26,7 +26,7 @@
     "nock": "^13.2.9",
     "prettier": "^2.7.1",
     "regenerator-runtime": "^0.13.9",
-    "serverless-offline": "^9.2.6",
+    "serverless-offline": "^9.3.0",
     "serverless-webpack": "^5.9.0",
     "webpack": "^5.74.0",
     "webpack-node-externals": "^3.0.0"
