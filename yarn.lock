@@ -2393,10 +2393,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.1213.0:
-  version "2.1213.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1213.0.tgz#efdbe52c72e6879348650ff9a69ab55ef948b6f3"
-  integrity sha512-ZfrUfhlLjwvQ6QTbg8lR4+SRFHaivzZMmfpS+64YzafcKjwc7rklYqiyh4MPTSmdNZkErgaAykYpXPMuTiWBug==
+aws-sdk@^2.1215.0:
+  version "2.1218.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1218.0.tgz#51f225b11be9a9443ea30964346018a4ca49b750"
+  integrity sha512-oreF2jKfUZ8VKnIKh8TrOOOsdSfv87jHGtWQNAHdvfeyrYK5FrnvGkHUZ3bu6g6u1gHwu5FhTPiRMbgS8Re+NA==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -6244,16 +6244,16 @@ serialize-javascript@^6.0.0:
   dependencies:
     randombytes "^2.1.0"
 
-serverless-offline@^10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-10.0.2.tgz#df68362a49dc5f18068b0f77e57df0df8ab11024"
-  integrity sha512-jaRtq/m9Zr03Kg2PqvXlYZXNivNDXX9JESVf8blosjaVhgsG8g50iznRAnYPnSBUEvKhX6oxEkd4Cb6UaJyHyQ==
+serverless-offline@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-10.1.0.tgz#91e5e0ef485b4835d9343e8b7de3f32fff49c78f"
+  integrity sha512-wNfN+z2y7j08OSNw6U6ymxa3/mYctfotC8M5OAtTnaYuQcISccDzbQFYk9KgqJjI98rIng8Z+MWZKsvtb+Zg/Q==
   dependencies:
     "@hapi/boom" "^10.0.0"
     "@hapi/h2o2" "^9.1.0"
     "@hapi/hapi" "^20.2.2"
     "@serverless/utils" "^6.7.0"
-    aws-sdk "^2.1213.0"
+    aws-sdk "^2.1215.0"
     boxen "^7.0.0"
     chalk "^5.0.1"
     execa "^6.1.0"
