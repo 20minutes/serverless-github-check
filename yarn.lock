@@ -2427,7 +2427,7 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.1227.0:
+aws-sdk@^2.1230.0:
   version "2.1230.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1230.0.tgz#d7ebf384f2cb9b312325c537d38bec47e5ba8087"
   integrity sha512-7Y260dvzr7b8/lZhg6A7h5WyHvfCgdFL0NiBgCuT3/xlw9rvq9b08JNYErEpaJSmo+A5hW35n6wtzii4/FUSTA==
@@ -2783,10 +2783,10 @@ chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.0.1.tgz#ca57d71e82bb534a296df63bbacc4a1c22b2a4b6"
-  integrity sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==
+chalk@^5.0.1, chalk@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.1.0.tgz#c4b4a62bfb6df0eeeb5dbc52e6a9ecaff14b9976"
+  integrity sha512-56zD4khRTBoIyzUYAFgDDaPhUMN/fC/rySe6aZGqbj/VWiU2eI3l6ZLOtYGFZAV5v02mwPjtpzlrOveJiz5eZQ==
 
 char-regex@^1.0.2:
   version "1.0.2"
@@ -6205,18 +6205,18 @@ serialize-javascript@^6.0.0:
   dependencies:
     randombytes "^2.1.0"
 
-serverless-offline@^11.0.2:
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-11.0.2.tgz#bbeb7c9d5c03f42af12a97d80862e1c6a7d699d4"
-  integrity sha512-d2Tj+NgP4fm6GCNQW38eAuZlhz6Xhqu3FuILWEsbZTaVbmB5YzOiXumbLYuvseBlQMkxYq2MoOGVD6Ai7j47sQ==
+serverless-offline@^11.0.3:
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-11.0.3.tgz#e8174ad512ac5b7f89a515f27f08380c600067ac"
+  integrity sha512-vr47z6FWj5BcSQ2auSmCNqFdjublp14G8z2TLtDxNGoE8Ax+dZ3LPJyJ1isfm1Ip1z5h4ktDtqtGtsKLA4e1rA==
   dependencies:
     "@hapi/boom" "^10.0.0"
     "@hapi/h2o2" "^10.0.0"
     "@hapi/hapi" "^20.2.2"
     "@serverless/utils" "^6.7.0"
-    aws-sdk "^2.1227.0"
+    aws-sdk "^2.1230.0"
     boxen "^7.0.0"
-    chalk "^5.0.1"
+    chalk "^5.1.0"
     execa "^6.1.0"
     fs-extra "^10.1.0"
     java-invoke-local "0.0.6"
