@@ -9,3 +9,8 @@ updates:
   open-pull-requests-limit: 10
   reviewers:
   - j0k3r
+  ignore:
+  # because of ESM
+  - dependency-name: "semver-diff"
+    versions:
+    - ">= 4.0.0"

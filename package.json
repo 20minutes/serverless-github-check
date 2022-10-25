@@ -2,7 +2,7 @@
   "name": "serverless-github-check",
   "main": "handler.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --silent",
     "lint": "eslint functions/ tests/"
   },
   "author": "20 Minutes <web-tech@20minutes.fr>",
@@ -33,10 +33,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.1",
+    "@octokit/graphql": "^5.0.4",
     "@octokit/rest": "^19.0.5",
+    "semver-diff": "3.1.1",
     "source-map-support": "^0.5.21"
   },
   "jest": {
+    "verbose": true,
     "clearMocks": true,
     "testEnvironment": "node",
     "collectCoverage": true,
