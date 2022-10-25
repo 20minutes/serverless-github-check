@@ -20,7 +20,7 @@ export async function handler(event, context, callback) {
   const body = JSON.parse(event.body)
 
   // when creating the webhook
-  if (body && 'hook' in body) {
+  if (body?.hook) {
     try {
       const message = validateWebhook(body)
 
@@ -40,7 +40,7 @@ export async function handler(event, context, callback) {
     }
   }
 
-  if (!(body && 'pull_request' in body)) {
+  if (!body?.pull_request) {
     response = {
       statusCode: 500,
       body: 'Event is not a Pull Request',
