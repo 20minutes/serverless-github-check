@@ -8,7 +8,7 @@ export async function handler(event, context, callback) {
   const body = JSON.parse(event.body)
 
   // when creating the webhook
-  if (body && 'hook' in body) {
+  if (body?.hook) {
     try {
       const message = validateWebhook(body)
 
@@ -30,7 +30,7 @@ export async function handler(event, context, callback) {
     return callback(null, response)
   }
 
-  if (!(body && 'pull_request' in body)) {
+  if (!body?.pull_request) {
     response = {
       statusCode: 500,
       body: 'Event is not a Pull Request',
@@ -43,20 +43,26 @@ export async function handler(event, context, callback) {
 
   const payload = {
     state: 'success',
-    description: 'Specification passed',
+    description: 'All good!',
     context: `${process.env.NAMESPACE} - PR Specification`,
   }
 
-  if (body.pull_request.title.length < process.env.CHECK_TITLE_LENGTH) {
+  if (
+    !body.pull_request?.title ||
+    body.pull_request?.title?.length < process.env.CHECK_TITLE_LENGTH
+  ) {
     payload.state = 'failure'
-    payload.description = 'Specification failed'
+    payload.description = 'Title is too short.'
 
     console.log('Fail: title too short')
   }
 
-  if (body.pull_request.body.length < process.env.CHECK_BODY_LENGTH) {
+  if (
+    !body.pull_request?.body ||
+    body?.pull_request?.body?.length < process.env.CHECK_BODY_LENGTH
+  ) {
     payload.state = 'failure'
-    payload.description = 'Specification failed'
+    payload.description = 'PR description is too short.'
 
     console.log('Fail: body too short')
   }

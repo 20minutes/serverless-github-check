@@ -101,7 +101,7 @@ describe('Validating specification', () => {
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('failure')
         expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBeDefined()
+        expect(body.description).toBe('Title is too short.')
 
         return true
       })
@@ -140,7 +140,7 @@ describe('Validating specification', () => {
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('failure')
         expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBeDefined()
+        expect(body.description).toBe('PR description is too short.')
 
         return true
       })
@@ -174,12 +174,51 @@ describe('Validating specification', () => {
     })
   })
 
+  test('body is null', async () => {
+    nock('https://api.github.com')
+      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
+        expect(body.state).toBe('failure')
+        expect(body.context).toBe('20 Minutes - PR Specification')
+        expect(body.description).toBe('PR description is too short.')
+
+        return true
+      })
+      .reply(200)
+
+    const callback = jest.fn()
+    const githubEvent = {
+      pull_request: {
+        number: 42,
+        title: 'This is a pretty simple change that we need to pull into master.',
+        body: null,
+        head: {
+          sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        },
+      },
+      repository: {
+        name: 'bar',
+        full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
+      },
+    }
+
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Process finished with state: failure',
+      statusCode: 204,
+    })
+  })
+
   test('body and title are OK', async () => {
     nock('https://api.github.com')
       .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
         expect(body.state).toBe('success')
         expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBeDefined()
+        expect(body.description).toBe('All good!')
 
         return true
       })
