@@ -5,27 +5,32 @@
 
 Apply some simple checks on each PR.
 
-![Example](https://user-images.githubusercontent.com/62333/51041495-5d9a3b80-15ba-11e9-9ead-815448ad0fee.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/62333/198560616-abd7f44b-87b9-41f4-a32b-47865f008ec7.png">
+  <img width="752" alt="example" src="https://user-images.githubusercontent.com/62333/198560107-4818722b-6619-47b9-b2da-124d15c85dc8.png">
+</picture>
 
 ## Use Cases
 
-We have 3 functions available:
+We have 4 functions available:
 
 - **specification**: It validates GitHub Pull Requests against some specifications:
     - `body` should be at least 8 characters long
     - `title` should be at least 8 characters long
-- **label**: It check if there is a blocking label in the GitHub Pull Request
+- **label**: It checks if there is a blocking label in the GitHub Pull Request
     - if one blocking label (default: `Work In Progress`, `Waiting For Change`, `Waiting For Travis`) is found, PR is blocked
     - if no labels are defined in the PR, PR is blocked
     - if no blocking labels are defined, PR is validated
-- **fixup**: It check if there is some `fixup!` commits in the PR history
+- **fixup**: It checks if there is some `fixup!` commits in the PR history
     - if at least one fixup commit are found, PR is blocked
     - if no fixup commits are found, PR is validated
+- **autoMerge**: It merges PR from @dependabot when the update it for a patch or a minor version
+    - the repo must have the _auto merge_ option enabled
 
 ## Prerequisites
 
-- Node.js 12
-- Serverless CLI v2 (`npm install -g serverless@2`)
+- Node.js 16
+- Serverless CLI v3 (`npm install -g serverless@3`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 

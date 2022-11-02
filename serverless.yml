@@ -15,10 +15,14 @@ provider:
     versionFunctions: false
     deploymentMethod: direct
     architecture: arm64
+    memorySize: 128
     environment:
         NAMESPACE: 20 Minutes
         # SecureString from SSM Parameters
         GITHUB_TOKEN: ${ssm:GITHUB_TOKEN}
+
+package:
+    individually: true
 
 custom:
     webpack:
@@ -65,5 +69,15 @@ functions:
             -
                 http:
                     path: webhook/fixup
+                    method: post
+                    cors: true
+
+    autoMerge:
+        handler: functions/auto-merge.handler
+        description: Automatically merge Dependabot PR
+        events:
+            -
+                http:
+                    path: webhook/auto-merge
                     method: post
                     cors: true
