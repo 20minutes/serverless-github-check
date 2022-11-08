@@ -11,7 +11,7 @@
     "@20minutes/eslint-config": "^1.2.4",
     "@babel/core": "^7.19.6",
     "@babel/eslint-parser": "^7.19.1",
-    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-env": "^7.20.2",
     "babel-loader": "^9.1.0",
     "babel-plugin-source-map-support": "^2.2.0",
     "eslint": "^8.26.0",
