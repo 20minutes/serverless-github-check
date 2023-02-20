@@ -1,4 +1,4 @@
-frameworkVersion: ">=3.17.0"
+frameworkVersion: ">=3.25.0"
 
 service: serverless-github-check
 
@@ -8,7 +8,7 @@ plugins:
 
 provider:
     name: aws
-    runtime: nodejs16.x
+    runtime: nodejs18.x
     profile: default
     region: ${opt:region, 'eu-west-1'}
     logRetentionInDays: 30
