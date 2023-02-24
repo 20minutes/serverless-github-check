@@ -2,6 +2,13 @@ import { Octokit } from '@octokit/rest'
 import { updateStatus, validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
+  if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
+    return callback(null, {
+      statusCode: 500,
+      body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
+    })
+  }
+
   let response
   const githubClient = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const blockLabels = process.env.BLOCK_LABELS

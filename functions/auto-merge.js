@@ -3,6 +3,13 @@ import semverDiff from 'semver-diff'
 import { validateWebhook } from './utils/github'
 
 export async function handler(event, context, callback) {
+  if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
+    return callback(null, {
+      statusCode: 500,
+      body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
+    })
+  }
+
   let response
   const body = JSON.parse(event.body)
 
