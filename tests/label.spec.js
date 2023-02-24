@@ -6,6 +6,25 @@ process.env.NAMESPACE = '20 Minutes'
 process.env.BLOCK_LABELS = 'wip , work in progress'
 
 describe('Validating GitHub event', () => {
+  test('bad content type', async () => {
+    const callback = jest.fn()
+
+    await handler(
+      {
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: 'payload%3D%7B%22zen%22%3A%22Non-blocking%2Bis%2Bbetter%2Bthan%2Bblocking.%22%7D',
+      },
+      {},
+      callback
+    )
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
+      statusCode: 500,
+    })
+  })
+
   test('bad event body', async () => {
     const callback = jest.fn()
 
