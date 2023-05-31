@@ -2,7 +2,7 @@
   "comments": false,
   "plugins": [
     "source-map-support",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-transform-class-properties"
   ],
   "presets": [
     [
