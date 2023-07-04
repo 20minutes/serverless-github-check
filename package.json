@@ -2,7 +2,7 @@
   "name": "serverless-github-check",
   "main": "handler.js",
   "scripts": {
-    "test": "jest --silent",
+    "test": "NODE_OPTIONS=--no-experimental-fetch jest --silent",
     "lint": "eslint functions/ tests/"
   },
   "author": "20 Minutes <web-tech@20minutes.fr>",
