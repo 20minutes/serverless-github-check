@@ -166,6 +166,61 @@ describe('Auto merge', () => {
     })
   })
 
+  test('got a PR approved & merged from grouped deps', async () => {
+    nock('https://api.github.com')
+      .post('/graphql', (body) => {
+        expect(body.query).toEqual(expect.stringContaining('addPullRequestReview'))
+        expect(body.query).toEqual(expect.stringContaining('event: APPROVE'))
+        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+
+        return true
+      })
+      .reply(200)
+    nock('https://api.github.com')
+      .post('/graphql', (body) => {
+        expect(body.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
+        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+
+        return true
+      })
+      .reply(200)
+
+    const callback = jest.fn()
+    const githubEvent = {
+      action: 'opened',
+      pull_request: {
+        node_id: 'PR_kwDOHDoTgM5BdXq1',
+        number: 615,
+        title: 'build(deps-dev): bump the storybook-dependencies group with 8 updates',
+        body: `Updates \`@storybook/addon-actions\` from 7.0.24 to 7.0.25
+Updates \`@storybook/addon-essentials\` from 7.0.24 to 7.0.25`,
+        user: {
+          login: 'dependabot[bot]',
+        },
+        base: {
+          repo: {
+            allow_auto_merge: true,
+          },
+        },
+        auto_merge: null,
+        merged: false,
+        mergeable: true,
+        rebaseable: true,
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'All done!',
+      statusCode: 204,
+    })
+  })
+
   test('PR is not opened or reopened', async () => {
     const callback = jest.fn()
     const githubEvent = {
@@ -314,6 +369,43 @@ describe('Auto merge', () => {
         node_id: 'PR_kwDOHDoTgM5BdXq1',
         number: 615,
         title: 'build(deps-dev): bump @storybook/addon-essentials from 6.5.12 to 7.5.13',
+        user: {
+          login: 'dependabot[bot]',
+        },
+        base: {
+          repo: {
+            allow_auto_merge: true,
+          },
+        },
+        auto_merge: null,
+        merged: false,
+        mergeable: true,
+        rebaseable: true,
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Update is a major version',
+      statusCode: 204,
+    })
+  })
+
+  test('PR is about a major change from grouped updates', async () => {
+    const callback = jest.fn()
+    const githubEvent = {
+      action: 'opened',
+      pull_request: {
+        node_id: 'PR_kwDOHDoTgM5BdXq1',
+        number: 615,
+        title: 'build(deps-dev): bump the storybook-dependencies group with 8 updates',
+        body: `Updates \`@storybook/addon-actions\` from 6.5.12 to 7.5.13
+Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
         user: {
           login: 'dependabot[bot]',
         },

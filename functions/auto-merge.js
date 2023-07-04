@@ -91,8 +91,23 @@ export async function handler(event, context, callback) {
     return callback(null, response)
   }
 
-  const [, oldVersion, newVersion] = body.pull_request.title.match(/from (.*) to (.*)/i)
-  const updateType = semverDiff(oldVersion, newVersion)
+  let updateType
+  const titleMatch = body.pull_request.title.match(/from (.*) to (.*)/i)
+
+  // try for one deps to be updated
+  // otherwise try for grouped deps, look for new version in the body instead
+  if (titleMatch) {
+    const [, oldVersion, newVersion] = titleMatch
+    updateType = semverDiff(oldVersion, newVersion)
+  } else if (body.pull_request.body.match(/from (.*) to (.*)/i)) {
+    const res = [...body.pull_request.body.matchAll(/from (.*) to (.*)/g)].some((update) => {
+      const [, oldVersion, newVersion] = update
+
+      return semverDiff(oldVersion, newVersion) === 'major'
+    })
+
+    updateType = res === false ? 'minor' : 'major'
+  }
 
   if (updateType === 'major') {
     console.log(`Update is a major version: ${body?.pull_request?.title}`)
@@ -104,8 +119,6 @@ export async function handler(event, context, callback) {
 
     return callback(null, response)
   }
-
-  console.log(JSON.stringify(body))
 
   const graphqlWithAuth = graphql.defaults({
     headers: {
