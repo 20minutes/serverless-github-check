@@ -99,12 +99,14 @@ export async function handler(event, context, callback) {
   if (titleMatch) {
     const [, oldVersion, newVersion] = titleMatch
     updateType = semverDiff(oldVersion, newVersion)
-  } else if (body.pull_request.body.match(/from (.*) to (.*)/i)) {
-    const res = [...body.pull_request.body.matchAll(/from (.*) to (.*)/g)].some((update) => {
-      const [, oldVersion, newVersion] = update
+  } else if (body.pull_request.body.match(/Updates (.*) from (.*) to (.*)/i)) {
+    const res = [...body.pull_request.body.matchAll(/Updates (.*) from (.*) to (.*)/g)].some(
+      (update) => {
+        const [, , oldVersion, newVersion] = update
 
-      return semverDiff(oldVersion, newVersion) === 'major'
-    })
+        return semverDiff(oldVersion, newVersion) === 'major'
+      }
+    )
 
     updateType = res === false ? 'minor' : 'major'
   }
