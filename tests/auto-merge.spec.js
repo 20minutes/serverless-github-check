@@ -191,9 +191,107 @@ describe('Auto merge', () => {
       pull_request: {
         node_id: 'PR_kwDOHDoTgM5BdXq1',
         number: 615,
-        title: 'build(deps-dev): bump the storybook-dependencies group with 8 updates',
-        body: `Updates \`@storybook/addon-actions\` from 7.0.24 to 7.0.25
-Updates \`@storybook/addon-essentials\` from 7.0.24 to 7.0.25`,
+        title: 'build(deps-dev): bump the storybook-dependencies group with 2 updates',
+        body: `Bumps the storybook-dependencies group with 2 updates:
+
+| Package | Update |
+| --- | --- |
+| [@storybook/addon-actions](https://github.com/storybookjs/storybook/tree/HEAD/code/addons/actions) | 7.0.25 to 7.0.26 |
+| [@storybook/addon-essentials](https://github.com/storybookjs/storybook/tree/HEAD/code/addons/essentials) | 7.0.25 to 7.0.26 |
+
+Updates \`@storybook/addon-actions\` from 7.0.25 to 7.0.26
+<details>
+<summary>Release notes</summary>
+<p><em>Sourced from <a href="https://github.com/storybookjs/storybook/releases"><code>@storybook/addon-actions</code>'s releases</a>.</em></p>
+<blockquote>
+<h2>v7.0.26</h2>
+<h2>7.0.26</h2>
+<ul>
+<li>Next.js: Fix next/image usage in latest Next.js release - <a href="https://redirect.github.com/storybookjs/storybook/pull/23296">#23296</a>, thanks <a href="https://github.com/valentinpalkovic"><code>@valentinpalkovic</code></a>!</li>
+<li>NextJS: Fix <code>useParams</code> support - <a href="https://redirect.github.com/storybookjs/storybook/pull/22946">#22946</a>, thanks <a href="https://github.com/gitstart-storybook"><code>@gitstart-storybook</code></a>!</li>
+<li>NextJS: Allow disabling next/image lazy loading - <a href="https://redirect.github.com/storybookjs/storybook/pull/21909">#21909</a>, thanks <a href="https://github.com/martinnabhan"><code>@martinnabhan</code></a></li>
+</ul>
+</blockquote>
+</details>
+<details>
+<summary>Changelog</summary>
+<p><em>Sourced from <a href="https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md"><code>@storybook/addon-actions</code>'s changelog</a>.</em></p>
+<blockquote>
+<h2>7.0.26</h2>
+<ul>
+<li>Next.js: Fix next/image usage in latest Next.js release - <a href="https://redirect.github.com/storybookjs/storybook/pull/23296">#23296</a>, thanks <a href="https://github.com/valentinpalkovic"><code>@valentinpalkovic</code></a>!</li>
+<li>NextJS: Fix <code>useParams</code> support - <a href="https://redirect.github.com/storybookjs/storybook/pull/22946">#22946</a>, thanks <a href="https://github.com/gitstart-storybook"><code>@gitstart-storybook</code></a>!</li>
+<li>NextJS: Allow disabling next/image lazy loading - <a href="https://redirect.github.com/storybookjs/storybook/pull/21909">#21909</a>, thanks <a href="https://github.com/martinnabhan"><code>@martinnabhan</code></a></li>
+</ul>
+</blockquote>
+</details>
+<details>
+<summary>Commits</summary>
+<ul>
+<li><a href="https://github.com/storybookjs/storybook/commit/19f91cddc806397c30f8ca9e3e76ae997a4a13af"><code>19f91cd</code></a> Bump version from 7.0.25 to 7.0.26</li>
+<li>See full diff in <a href="https://github.com/storybookjs/storybook/commits/v7.0.26/code/addons/actions">compare view</a></li>
+</ul>
+</details>
+<br />
+
+Updates \`@storybook/addon-essentials\` from 7.0.25 to 7.0.26
+<details>
+<summary>Release notes</summary>
+<p><em>Sourced from <a href="https://github.com/storybookjs/storybook/releases"><code>@storybook/addon-essentials</code>'s releases</a>.</em></p>
+<blockquote>
+<h2>v7.0.26</h2>
+<h2>7.0.26</h2>
+<ul>
+<li>Next.js: Fix next/image usage in latest Next.js release - <a href="https://redirect.github.com/storybookjs/storybook/pull/23296">#23296</a>, thanks <a href="https://github.com/valentinpalkovic"><code>@valentinpalkovic</code></a>!</li>
+<li>NextJS: Fix <code>useParams</code> support - <a href="https://redirect.github.com/storybookjs/storybook/pull/22946">#22946</a>, thanks <a href="https://github.com/gitstart-storybook"><code>@gitstart-storybook</code></a>!</li>
+<li>NextJS: Allow disabling next/image lazy loading - <a href="https://redirect.github.com/storybookjs/storybook/pull/21909">#21909</a>, thanks <a href="https://github.com/martinnabhan"><code>@martinnabhan</code></a></li>
+</ul>
+</blockquote>
+</details>
+<details>
+<summary>Changelog</summary>
+<p><em>Sourced from <a href="https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md"><code>@storybook/addon-essentials</code>'s changelog</a>.</em></p>
+<blockquote>
+<h2>7.0.26</h2>
+<ul>
+<li>Next.js: Fix next/image usage in latest Next.js release - <a href="https://redirect.github.com/storybookjs/storybook/pull/23296">#23296</a>, thanks <a href="https://github.com/valentinpalkovic"><code>@valentinpalkovic</code></a>!</li>
+<li>NextJS: Fix <code>useParams</code> support - <a href="https://redirect.github.com/storybookjs/storybook/pull/22946">#22946</a>, thanks <a href="https://github.com/gitstart-storybook"><code>@gitstart-storybook</code></a>!</li>
+<li>NextJS: Allow disabling next/image lazy loading - <a href="https://redirect.github.com/storybookjs/storybook/pull/21909">#21909</a>, thanks <a href="https://github.com/martinnabhan"><code>@martinnabhan</code></a></li>
+</ul>
+</blockquote>
+</details>
+<details>
+<summary>Commits</summary>
+<ul>
+<li><a href="https://github.com/storybookjs/storybook/commit/19f91cddc806397c30f8ca9e3e76ae997a4a13af"><code>19f91cd</code></a> Bump version from 7.0.25 to 7.0.26</li>
+<li>See full diff in <a href="https://github.com/storybookjs/storybook/commits/v7.0.26/code/addons/essentials">compare view</a></li>
+</ul>
+</details>
+<br />
+
+
+Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting \`@dependabot rebase\`.
+
+[//]: # (dependabot-automerge-start)
+[//]: # (dependabot-automerge-end)
+
+---
+
+<details>
+<summary>Dependabot commands and options</summary>
+<br />
+
+You can trigger Dependabot actions by commenting on this PR:
+- \`@dependabot rebase\` will rebase this PR
+- \`@dependabot recreate\` will recreate this PR, overwriting any edits that have been made to it
+- \`@dependabot merge\` will merge this PR after your CI passes on it
+- \`@dependabot squash and merge\` will squash and merge this PR after your CI passes on it
+- \`@dependabot cancel merge\` will cancel a previously requested merge and block automerging
+- \`@dependabot reopen\` will reopen this PR if it is closed
+- \`@dependabot close\` will close this PR and stop Dependabot recreating it. You can achieve the same result by closing it manually
+
+
+</details>`,
         user: {
           login: 'dependabot[bot]',
         },
