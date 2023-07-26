@@ -5105,7 +5105,7 @@ is-boolean-object@^1.1.0:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
 
-is-builtin-module@^3.2.0:
+is-builtin-module@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/is-builtin-module/-/is-builtin-module-3.2.1.tgz#f03271717d8654cfcaf07ab0463faa3571581169"
   integrity sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==
@@ -7040,17 +7040,17 @@ serverless-offline@^12.0.4:
     velocityjs "^2.0.6"
     ws "^8.11.0"
 
-serverless-webpack@^5.11.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-5.11.0.tgz#1cd4397925af47943fffec79d755e15d91720406"
-  integrity sha512-0OjwSAMrf1OZZfbFwWUGuqz9eiMJIinTRWz2XNkKD3TY5EifvwU7oAF7mEXKPZTgtVhusSzz408C3FWgcIHizg==
+serverless-webpack@^5.12.0:
+  version "5.12.0"
+  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-5.12.0.tgz#61dafbcf63884a64d991de0b38f6bd71bc5ae266"
+  integrity sha512-krXmz20rT4X9WkiT6nnH/o+gOVof+SFXKTsCTOY2eDF+9PS4UKtGlzZkjNyDV62lCQgD7nmXPbdY2hYoGmyeYg==
   dependencies:
     archiver "^5.3.1"
     bluebird "^3.7.2"
     find-yarn-workspace-root "^2.0.0"
     fs-extra "^9.1.0"
     glob "^7.2.3"
-    is-builtin-module "^3.2.0"
+    is-builtin-module "^3.2.1"
     lodash "^4.17.21"
     semver "^7.3.8"
   optionalDependencies:
