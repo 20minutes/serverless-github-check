@@ -531,6 +531,42 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
     })
   })
 
+  test('PR is about an unknown change from grouped updates', async () => {
+    const callback = jest.fn()
+    const githubEvent = {
+      action: 'opened',
+      pull_request: {
+        node_id: 'PR_kwDOHDoTgM5BdXq1',
+        number: 615,
+        title: 'build(deps-dev): bump the graphql-codegen-dependencies group with 1 update',
+        body: `Bumps the graphql-codegen-dependencies group with 1 update: [@graphql-codegen/cli](https://github.com/dotansimha/graphql-code-generator/tree/HEAD/packages/graphql-codegen-cli).`,
+        user: {
+          login: 'dependabot[bot]',
+        },
+        base: {
+          repo: {
+            allow_auto_merge: true,
+          },
+        },
+        auto_merge: null,
+        merged: false,
+        mergeable: true,
+        rebaseable: true,
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'Unable to dermine the update type',
+      statusCode: 204,
+    })
+  })
+
   test('PR has already auto_merge enabled', async () => {
     nock('https://api.github.com')
       .post('/graphql', (body) => {
