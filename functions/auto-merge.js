@@ -109,6 +109,16 @@ export async function handler(event, context, callback) {
     )
 
     updateType = res === false ? 'minor' : 'major'
+  } else {
+    console.log(`Unable to dermine the update type...`)
+    console.log(JSON.stringify(body.pull_request))
+
+    response = {
+      statusCode: 204,
+      body: 'Unable to dermine the update type',
+    }
+
+    return callback(null, response)
   }
 
   if (updateType === 'major') {
