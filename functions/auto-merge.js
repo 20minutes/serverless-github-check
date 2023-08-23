@@ -99,7 +99,7 @@ export async function handler(event, context, callback) {
   if (titleMatch) {
     const [, oldVersion, newVersion] = titleMatch
     updateType = semverDiff(oldVersion, newVersion)
-  } else if (body.pull_request.body.match(/Updates (.*) from (.*) to (.*)/i)) {
+  } else if (body.pull_request.body.match(/Updates (.*) from (.*) to (.*)/)) {
     const res = [...body.pull_request.body.matchAll(/Updates (.*) from (.*) to (.*)/g)].some(
       (update) => {
         const [, , oldVersion, newVersion] = update
