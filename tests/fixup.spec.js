@@ -1,8 +1,6 @@
-import nock from 'nock'
+import fetchMock from 'fetch-mock'
+import { FixupHandler } from '../functions/classes/FixupHandler'
 import { handler } from '../functions/fixup'
-
-// mimic serverless environment variables
-process.env.NAMESPACE = '20 Minutes'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {
@@ -114,53 +112,49 @@ describe('Validating GitHub event', () => {
 
 describe('Fixup commits check', () => {
   test('got a fixup commit', async () => {
-    nock('https://api.github.com')
+    const mock = fetchMock
+      .sandbox()
       .get(
-        '/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511'
+        'https://api.github.com/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        {
+          commits: [
+            {
+              commit: {
+                message: 'is fine',
+              },
+              parents: [
+                {
+                  sha: '11111111111',
+                },
+              ],
+            },
+            {
+              commit: {
+                message: 'is ok',
+              },
+              parents: [
+                {
+                  sha: '22222222222',
+                },
+              ],
+            },
+            {
+              commit: {
+                message: 'fixup! 5555555555555',
+              },
+              parents: [
+                {
+                  sha: '333333333333',
+                },
+              ],
+            },
+          ],
+        }
       )
-      .reply(200, {
-        commits: [
-          {
-            commit: {
-              message: 'is fine',
-            },
-            parents: [
-              {
-                sha: '11111111111',
-              },
-            ],
-          },
-          {
-            commit: {
-              message: 'is ok',
-            },
-            parents: [
-              {
-                sha: '22222222222',
-              },
-            ],
-          },
-          {
-            commit: {
-              message: 'fixup! 5555555555555',
-            },
-            parents: [
-              {
-                sha: '333333333333',
-              },
-            ],
-          },
-        ],
-      })
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - Fixup check')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+      .post(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -184,53 +178,57 @@ describe('Fixup commits check', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND', mock)
+    await fixup.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      state: 'failure',
+      description: 'Fixup commits in history, please squash them!',
+      context: 'THE BRAND - Fixup check',
+    })
   })
 
   test('got a non-fixup commit', async () => {
-    nock('https://api.github.com')
+    const mock = fetchMock
+      .sandbox()
       .get(
-        '/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511'
+        'https://api.github.com/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        {
+          commits: [
+            {
+              commit: {
+                message: 'New feature',
+              },
+              parents: [
+                {
+                  sha: '123123123',
+                },
+              ],
+            },
+            {
+              commit: {
+                message: 'fix feature',
+              },
+              parents: [
+                {
+                  sha: '4564564566',
+                },
+              ],
+            },
+          ],
+        }
       )
-      .reply(200, {
-        commits: [
-          {
-            commit: {
-              message: 'New feature',
-            },
-            parents: [
-              {
-                sha: '123123123',
-              },
-            ],
-          },
-          {
-            commit: {
-              message: 'fix feature',
-            },
-            parents: [
-              {
-                sha: '4564564566',
-              },
-            ],
-          },
-        ],
-      })
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Fixup check')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+      .post(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -254,46 +252,50 @@ describe('Fixup commits check', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND', mock)
+    await fixup.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: success',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      state: 'success',
+      description: 'No fixup commits in history',
+      context: 'THE BRAND - Fixup check',
+    })
   })
 
   test('got a merge commit', async () => {
-    nock('https://api.github.com')
+    const mock = fetchMock
+      .sandbox()
       .get(
-        '/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511'
-      )
-      .reply(200, {
-        commits: [
-          {
-            commit: {
-              message: 'new feature',
+        'https://api.github.com/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        {
+          commits: [
+            {
+              commit: {
+                message: 'new feature',
+              },
+              parents: [
+                {
+                  sha: '123123123',
+                },
+                {
+                  sha: '456456456',
+                },
+              ],
             },
-            parents: [
-              {
-                sha: '123123123',
-              },
-              {
-                sha: '456456456',
-              },
-            ],
-          },
-        ],
-      })
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Fixup check')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+          ],
+        }
+      )
+      .post(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -317,12 +319,20 @@ describe('Fixup commits check', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND', mock)
+    await fixup.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: success',
       statusCode: 204,
+    })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      state: 'success',
+      description: 'No fixup commits in history',
+      context: 'THE BRAND - Fixup check',
     })
   })
 })

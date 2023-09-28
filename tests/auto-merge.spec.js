@@ -1,8 +1,6 @@
-import nock from 'nock'
+import fetchMock from 'fetch-mock'
+import { AutomergeHandler } from '../functions/classes/AutomergeHandler'
 import { handler } from '../functions/auto-merge'
-
-// mimic serverless environment variables
-process.env.NAMESPACE = '20 Minutes'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {
@@ -114,23 +112,7 @@ describe('Validating GitHub event', () => {
 
 describe('Auto merge', () => {
   test('got a PR approved & merged', async () => {
-    nock('https://api.github.com')
-      .post('/graphql', (body) => {
-        expect(body.query).toEqual(expect.stringContaining('addPullRequestReview'))
-        expect(body.query).toEqual(expect.stringContaining('event: APPROVE'))
-        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
-
-        return true
-      })
-      .reply(200)
-    nock('https://api.github.com')
-      .post('/graphql', (body) => {
-        expect(body.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
-        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock.sandbox().mock('https://api.github.com/graphql', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -157,33 +139,28 @@ describe('Auto merge', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const autoMerge = new AutomergeHandler('GH_TOKEN', mock)
+    await autoMerge.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'All done!',
       statusCode: 204,
     })
+
+    const calls = mock.calls()
+    const firstBody = JSON.parse(calls[0][1].body)
+    expect(firstBody.query).toEqual(expect.stringContaining('addPullRequestReview'))
+    expect(firstBody.query).toEqual(expect.stringContaining('event: APPROVE'))
+    expect(firstBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+
+    const secondBody = JSON.parse(calls[1][1].body)
+    expect(secondBody.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
+    expect(secondBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
   })
 
   test('got a PR approved & merged from grouped deps', async () => {
-    nock('https://api.github.com')
-      .post('/graphql', (body) => {
-        expect(body.query).toEqual(expect.stringContaining('addPullRequestReview'))
-        expect(body.query).toEqual(expect.stringContaining('event: APPROVE'))
-        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
-
-        return true
-      })
-      .reply(200)
-    nock('https://api.github.com')
-      .post('/graphql', (body) => {
-        expect(body.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
-        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock.sandbox().mock('https://api.github.com/graphql', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -310,13 +287,24 @@ You can trigger Dependabot actions by commenting on this PR:
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const autoMerge = new AutomergeHandler('GH_TOKEN', mock)
+    await autoMerge.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'All done!',
       statusCode: 204,
     })
+
+    const calls = mock.calls()
+    const firstBody = JSON.parse(calls[0][1].body)
+    expect(firstBody.query).toEqual(expect.stringContaining('addPullRequestReview'))
+    expect(firstBody.query).toEqual(expect.stringContaining('event: APPROVE'))
+    expect(firstBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+
+    const secondBody = JSON.parse(calls[1][1].body)
+    expect(secondBody.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
+    expect(secondBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
   })
 
   test('PR is not opened or reopened', async () => {
@@ -568,15 +556,7 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
   })
 
   test('PR has already auto_merge enabled', async () => {
-    nock('https://api.github.com')
-      .post('/graphql', (body) => {
-        expect(body.query).toEqual(expect.stringContaining('addPullRequestReview'))
-        expect(body.query).toEqual(expect.stringContaining('event: APPROVE'))
-        expect(body.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock.sandbox().mock('https://api.github.com/graphql', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -603,12 +583,19 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const autoMerge = new AutomergeHandler('GH_TOKEN', mock)
+    await autoMerge.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'All done!',
       statusCode: 204,
     })
+
+    const calls = mock.calls()
+    const firstBody = JSON.parse(calls[0][1].body)
+    expect(firstBody.query).toEqual(expect.stringContaining('addPullRequestReview'))
+    expect(firstBody.query).toEqual(expect.stringContaining('event: APPROVE'))
+    expect(firstBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
   })
 })

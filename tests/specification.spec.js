@@ -1,10 +1,6 @@
-import nock from 'nock'
+import fetchMock from 'fetch-mock'
+import { SpecificationHandler } from '../functions/classes/SpecificationHandler'
 import { handler } from '../functions/specification'
-
-// mimic serverless environment variables
-process.env.NAMESPACE = '20 Minutes'
-process.env.CHECK_BODY_LENGTH = 8
-process.env.CHECK_TITLE_LENGTH = 8
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {
@@ -116,15 +112,12 @@ describe('Validating GitHub event', () => {
 
 describe('Validating specification', () => {
   test('title is too short', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBe('Title is too short.')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -145,25 +138,30 @@ describe('Validating specification', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - PR Specification',
+      description: 'Title is too short.',
+      state: 'failure',
+    })
   })
 
   test('body is too short', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBe('PR description is too short.')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -184,25 +182,30 @@ describe('Validating specification', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - PR Specification',
+      description: 'PR description is too short.',
+      state: 'failure',
+    })
   })
 
   test('body is null', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBe('PR description is too short.')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -223,25 +226,30 @@ describe('Validating specification', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - PR Specification',
+      description: 'PR description is too short.',
+      state: 'failure',
+    })
   })
 
   test('body and title are OK', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - PR Specification')
-        expect(body.description).toBe('All good!')
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -262,12 +270,20 @@ describe('Validating specification', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: success',
       statusCode: 204,
+    })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - PR Specification',
+      description: 'All good!',
+      state: 'success',
     })
   })
 })

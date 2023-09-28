@@ -1,9 +1,6 @@
-import nock from 'nock'
+import fetchMock from 'fetch-mock'
+import { LabelHandler } from '../functions/classes/LabelHandler'
 import { handler } from '../functions/label'
-
-// mimic serverless environment variables
-process.env.NAMESPACE = '20 Minutes'
-process.env.BLOCK_LABELS = 'wip , work in progress'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {
@@ -115,15 +112,12 @@ describe('Validating GitHub event', () => {
 
 describe('Validating label', () => {
   test('got a blocking label', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - Label validation')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -149,25 +143,30 @@ describe('Validating label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - Label validation',
+      description: 'Label validation failed',
+      state: 'failure',
+    })
   })
 
   test('got a blocking label in multiple labels', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - Label validation')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -199,25 +198,30 @@ describe('Validating label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - Label validation',
+      description: 'Label validation failed',
+      state: 'failure',
+    })
   })
 
   test('no label found in the PR', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('failure')
-        expect(body.context).toBe('20 Minutes - Label validation')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -239,25 +243,30 @@ describe('Validating label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - Label validation',
+      description: 'Label validation failed',
+      state: 'failure',
+    })
   })
 
   test('no blocking label found', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Label validation')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -283,25 +292,30 @@ describe('Validating label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: success',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - Label validation',
+      description: 'Label validation passed',
+      state: 'success',
+    })
   })
 
   test('no blocking label found (with partial label)', async () => {
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Label validation')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -327,27 +341,30 @@ describe('Validating label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: success',
       statusCode: 204,
     })
+
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - Label validation',
+      description: 'Label validation passed',
+      state: 'success',
+    })
   })
 
   test('no blocking label defined', async () => {
-    process.env.BLOCK_LABELS = ''
-
-    nock('https://api.github.com')
-      .post('/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511', (body) => {
-        expect(body.state).toBe('success')
-        expect(body.context).toBe('20 Minutes - Label validation')
-        expect(body.description).toBeDefined()
-
-        return true
-      })
-      .reply(200)
+    const mock = fetchMock
+      .sandbox()
+      .mock(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
 
     const callback = jest.fn()
     const githubEvent = {
@@ -373,12 +390,19 @@ describe('Validating label', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', '', mock)
+    await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(null, {
       body: 'Process finished with state: success',
       statusCode: 204,
+    })
+    const lastOptions = JSON.parse(mock.lastOptions().body)
+    expect(lastOptions).toStrictEqual({
+      context: 'THE BRAND - Label validation',
+      description: 'Label validation passed',
+      state: 'success',
     })
   })
 })
