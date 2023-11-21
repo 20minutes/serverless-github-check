@@ -32,7 +32,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.2",
+    "@babel/runtime": "^7.23.4",
     "@octokit/graphql": "^7.0.2",
     "@octokit/rest": "^20.0.2",
     "semver-diff": "3.1.1",
