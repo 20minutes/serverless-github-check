@@ -29,7 +29,7 @@ We have 4 functions available:
 
 ## Prerequisites
 
-- Node.js 18
+- Node.js 20
 - Serverless CLI v3 (`npm install -g serverless@3`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
