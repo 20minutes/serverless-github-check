@@ -75,14 +75,14 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-sdk/client-lambda@^3.468.0":
-  version "3.470.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-lambda/-/client-lambda-3.470.0.tgz#a56f0aed79072b99805004e8292474caf56aa0ac"
-  integrity sha512-GW606+1Vt4+Cd3fpKnvIU9laBBJrdOo1y3DmpwTQ7V03u8G/36alWVSFC3RspsANpt+PQj9A45LdDrVsCx0LEQ==
+"@aws-sdk/client-lambda@^3.470.0":
+  version "3.473.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-lambda/-/client-lambda-3.473.0.tgz#30978fc32c8db0cb25d57dbd4f3a32c09af46591"
+  integrity sha512-0XMWnxq5n936pSiORS41fE2AC0ico+r2mA75R53Hdio2r3E78HNgANKgXJ3bEGNhO25cLQ6qna7Ip0UaWc1wkw==
   dependencies:
     "@aws-crypto/sha256-browser" "3.0.0"
     "@aws-crypto/sha256-js" "3.0.0"
-    "@aws-sdk/client-sts" "3.470.0"
+    "@aws-sdk/client-sts" "3.473.0"
     "@aws-sdk/core" "3.468.0"
     "@aws-sdk/credential-provider-node" "3.470.0"
     "@aws-sdk/middleware-host-header" "3.468.0"
@@ -167,10 +167,10 @@
     "@smithy/util-utf8" "^2.0.2"
     tslib "^2.5.0"
 
-"@aws-sdk/client-sts@3.470.0":
-  version "3.470.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sts/-/client-sts-3.470.0.tgz#f161d087564f9e545fbcd199c7197ec0cfce29b9"
-  integrity sha512-TP3A4t8FoFEQinm6axxduTUnlMMLpmLi4Sf00JTI2CszxLUFh/JyUhYQ5gSOoXgPFmfwVXUNKCtmR3jdP0ZGPw==
+"@aws-sdk/client-sts@3.473.0":
+  version "3.473.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sts/-/client-sts-3.473.0.tgz#413aaa82e30b6bd49d783f85af95357a89d2a792"
+  integrity sha512-ttRZs+sW96cpuoVdys4KZ81yXq4c6xyhGOZIRUpi/YiwB1gnNvCEo5CDFL7PSdW/bjI2ovyUgu8EArq+7KlLwA==
   dependencies:
     "@aws-crypto/sha256-browser" "3.0.0"
     "@aws-crypto/sha256-js" "3.0.0"
@@ -7176,12 +7176,12 @@ serialize-javascript@^6.0.1:
   dependencies:
     randombytes "^2.1.0"
 
-serverless-offline@^13.3.1:
-  version "13.3.1"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.3.1.tgz#f119537c163ec11cd0aecd0097b16247398ee219"
-  integrity sha512-AXmy2M/Vrh5k5A7SLagzDfIki52jQ8M9WvtC5D5wi1gSLiLOqrHiaKOqy6f2WkSr7PyqZ3X2/uv8PN+BxV9Weg==
+serverless-offline@^13.3.2:
+  version "13.3.2"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.3.2.tgz#631dd2cd2622b711bbf869d1c016e6b9eb6e10dc"
+  integrity sha512-Za+n+EZFg8T3m4OEgkPNMLsVYk31a/jhwweXFojTBjBXXgnkFrMYK+yTX6V45NCg/g1aMUipF+A+B88QQvfyVw==
   dependencies:
-    "@aws-sdk/client-lambda" "^3.468.0"
+    "@aws-sdk/client-lambda" "^3.470.0"
     "@hapi/boom" "^10.0.1"
     "@hapi/h2o2" "^10.0.4"
     "@hapi/hapi" "^21.3.2"
@@ -7204,7 +7204,7 @@ serverless-offline@^13.3.1:
     p-memoize "^7.1.1"
     p-retry "^6.1.0"
     velocityjs "^2.0.6"
-    ws "^8.14.2"
+    ws "^8.15.1"
 
 serverless-webpack@^5.13.0:
   version "5.13.0"
@@ -8100,10 +8100,10 @@ write-file-atomic@^4.0.2:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.7"
 
-ws@^8.14.2:
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.15.0.tgz#db080a279260c5f532fc668d461b8346efdfcf86"
-  integrity sha512-H/Z3H55mrcrgjFwI+5jKavgXvwQLtfPCUEp6pi35VhoB0pfcHnSoyuTzkBEZpzq49g1193CUEwIvmsjcotenYw==
+ws@^8.15.1:
+  version "8.15.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.15.1.tgz#271ba33a45ca0cc477940f7f200cd7fba7ee1997"
+  integrity sha512-W5OZiCjXEmk0yZ66ZN82beM5Sz7l7coYxpRkzS+p9PP+ToQry8szKh+61eNktr7EA9DOwvFGhfC605jDHbP6QQ==
 
 xtend@^4.0.0:
   version "4.0.2"
