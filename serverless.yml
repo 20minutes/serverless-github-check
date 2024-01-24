@@ -65,6 +65,7 @@ functions:
     fixup:
         handler: functions/fixup.handler
         description: Ensure no "fixup!" commits are in the PR
+        timeout: 10
         events:
             -
                 http:
