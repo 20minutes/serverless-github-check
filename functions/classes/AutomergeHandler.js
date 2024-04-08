@@ -51,7 +51,7 @@ export class AutomergeHandler extends Handler {
     }
 
     let updateType
-    const titleMatch = body.pull_request.title.match(/from (.*) to (.*)/i)
+    const titleMatch = body.pull_request.title.match(/from ([\w.]+) to ([\w.]+)/i)
 
     // try for one deps to be updated
     // otherwise try for grouped deps, look for new version in the body instead
