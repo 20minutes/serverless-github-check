@@ -159,6 +159,54 @@ describe('Auto merge', () => {
     expect(secondBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
   })
 
+  test('got a PR approved & merged with one deps in grouped deps', async () => {
+    const mock = fetchMock.sandbox().mock('https://api.github.com/graphql', 200)
+
+    const callback = jest.fn()
+    const githubEvent = {
+      action: 'opened',
+      pull_request: {
+        node_id: 'PR_kwDOHDoTgM5BdXq1',
+        number: 615,
+        title: 'Bump @aws-sdk/client-s3 from 3.549.0 to 3.550.0 in the aws-sdk-dependencies group',
+        user: {
+          login: 'dependabot[bot]',
+        },
+        base: {
+          repo: {
+            allow_auto_merge: true,
+          },
+        },
+        auto_merge: null,
+        merged: false,
+        mergeable: true,
+        rebaseable: true,
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    const autoMerge = new AutomergeHandler('GH_TOKEN', mock)
+    await autoMerge.handle(githubEvent, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'All done!',
+      statusCode: 204,
+    })
+
+    const calls = mock.calls()
+    const firstBody = JSON.parse(calls[0][1].body)
+    expect(firstBody.query).toEqual(expect.stringContaining('addPullRequestReview'))
+    expect(firstBody.query).toEqual(expect.stringContaining('event: APPROVE'))
+    expect(firstBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+
+    const secondBody = JSON.parse(calls[1][1].body)
+    expect(secondBody.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
+    expect(secondBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+  })
+
   test('got a PR approved & merged from grouped deps', async () => {
     const mock = fetchMock.sandbox().mock('https://api.github.com/graphql', 200)
 
