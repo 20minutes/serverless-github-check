@@ -2079,6 +2079,14 @@
     before-after-hook "^2.2.0"
     universal-user-agent "^6.0.0"
 
+"@octokit/endpoint@^10.0.0":
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-10.1.0.tgz#8a64ddf7c4fc01427ff7e4dd19531ec1df20ce95"
+  integrity sha512-ogZ5uLMeGBZUzS32fNt9j+dNw3kkEn5CSw4CVkN1EvCNdFYWrQ5diQR6Hh52VrPR0oayIoYTqQFL/l8RqkV0qw==
+  dependencies:
+    "@octokit/types" "^13.0.0"
+    universal-user-agent "^7.0.2"
+
 "@octokit/endpoint@^9.0.1":
   version "9.0.5"
   resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-9.0.5.tgz#e6c0ee684e307614c02fc6ac12274c50da465c44"
@@ -2087,7 +2095,7 @@
     "@octokit/types" "^13.1.0"
     universal-user-agent "^6.0.0"
 
-"@octokit/graphql@^7.0.2", "@octokit/graphql@^7.1.0":
+"@octokit/graphql@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@octokit/graphql/-/graphql-7.1.0.tgz#9bc1c5de92f026648131f04101cab949eeffe4e0"
   integrity sha512-r+oZUH7aMFui1ypZnAvZmn0KSqAUgE1/tUXIWaqUCa1758ts/Jio84GZuzsvUkme98kv0WFY8//n0J1Z+vsIsQ==
@@ -2095,6 +2103,15 @@
     "@octokit/request" "^8.3.0"
     "@octokit/types" "^13.0.0"
     universal-user-agent "^6.0.0"
+
+"@octokit/graphql@^8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@octokit/graphql/-/graphql-8.1.0.tgz#7e0532f17db0bf986d962271715909d427605db5"
+  integrity sha512-XDvj6GcUnQYgbCLXElt3vZDzNIPGvGiwxQO2XzsvfVUjebGh0E5eCD/1My9zUGSNKaGVZitVuO8LMziGmoFryg==
+  dependencies:
+    "@octokit/request" "^9.0.0"
+    "@octokit/types" "^13.0.0"
+    universal-user-agent "^7.0.0"
 
 "@octokit/openapi-types@^20.0.0":
   version "20.0.0"
@@ -2134,6 +2151,13 @@
     deprecation "^2.0.0"
     once "^1.4.0"
 
+"@octokit/request-error@^6.0.1":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@octokit/request-error/-/request-error-6.1.0.tgz#8b69a5c6db3674369a84722ce3d06b58f1d71584"
+  integrity sha512-xcLJv4IgfWIOEEVZwfhUN3yHNWJL0AMw1J1Ba8BofM9RdDTbapg6MO4zNxlPS4XXX9aAIsbDRa47K57EhgeVAw==
+  dependencies:
+    "@octokit/types" "^13.0.0"
+
 "@octokit/request@^8.3.0", "@octokit/request@^8.3.1":
   version "8.3.1"
   resolved "https://registry.yarnpkg.com/@octokit/request/-/request-8.3.1.tgz#7a71ae6cffe1574a89566acabf0fc879ef92f6ef"
@@ -2143,6 +2167,16 @@
     "@octokit/request-error" "^5.1.0"
     "@octokit/types" "^13.0.0"
     universal-user-agent "^6.0.0"
+
+"@octokit/request@^9.0.0":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@octokit/request/-/request-9.0.1.tgz#628bc5b21243289b8e656dc43eb199d2a2ad1570"
+  integrity sha512-kL+cAcbSl3dctYLuJmLfx6Iku2MXXy0jszhaEIjQNaCp4zjHXrhVAHeuaRdNvJjW9qjl3u1MJ72+OuBP0YW/pg==
+  dependencies:
+    "@octokit/endpoint" "^10.0.0"
+    "@octokit/request-error" "^6.0.1"
+    "@octokit/types" "^12.0.0"
+    universal-user-agent "^7.0.2"
 
 "@octokit/rest@^20.1.0":
   version "20.1.0"
@@ -2154,7 +2188,7 @@
     "@octokit/plugin-request-log" "^4.0.0"
     "@octokit/plugin-rest-endpoint-methods" "^10.2.0"
 
-"@octokit/types@^12.6.0":
+"@octokit/types@^12.0.0", "@octokit/types@^12.6.0":
   version "12.6.0"
   resolved "https://registry.yarnpkg.com/@octokit/types/-/types-12.6.0.tgz#8100fb9eeedfe083aae66473bd97b15b62aedcb2"
   integrity sha512-1rhSOfRa6H9w4YwK0yrf5faDaDTb+yLyBUKOCV4xtCDB5VmIPqd/v9yr9o6SAzOAlRxMiRiCic6JVM1/kunVkw==
@@ -7901,6 +7935,11 @@ universal-user-agent@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/universal-user-agent/-/universal-user-agent-6.0.1.tgz#15f20f55da3c930c57bddbf1734c6654d5fd35aa"
   integrity sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==
+
+universal-user-agent@^7.0.0, universal-user-agent@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/universal-user-agent/-/universal-user-agent-7.0.2.tgz#52e7d0e9b3dc4df06cc33cb2b9fd79041a54827e"
+  integrity sha512-0JCqzSKnStlRRQfCdowvqy3cy0Dvtlb8xecj/H8JFZuCze4rwjPZQOgvFvn0Ws/usCHQFGpyr+pB9adaGwXn4Q==
 
 universalify@^2.0.0:
   version "2.0.1"
