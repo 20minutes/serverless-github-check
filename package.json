@@ -35,7 +35,7 @@
   "dependencies": {
     "@babel/runtime": "^7.25.0",
     "@octokit/graphql": "^7.0.2",
-    "@octokit/rest": "^20.1.1",
+    "@octokit/rest": "^21.0.1",
     "semver-diff": "3.1.1",
     "source-map-support": "^0.5.21"
   },
