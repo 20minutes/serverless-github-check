@@ -4376,12 +4376,11 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-fetch-mock@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-10.1.1.tgz#09f5f14aff5587095fc1632c271523a5aff1e79c"
-  integrity sha512-R6MwxuGwlUe0K6GzdLY1Wa9voX/GbUBDZjNHBsvlBhrpXurCYpQN4EW0iFCmtWddDTuS0ubR93OtFSgy9E/L2A==
+fetch-mock@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-11.1.0.tgz#2e0790aba226547e454252253048adc087824eff"
+  integrity sha512-Ng8pIwjVymfQgLGj0Sv1xpsmHc6PvzJyHFxb2yF8TfiiKg03dZDFAI9ST7dOb+GwCcFwE11O/rXht5UHgO94dw==
   dependencies:
-    debug "^4.1.1"
     dequal "^2.0.3"
     globrex "^0.1.2"
     is-subset "^0.1.1"
