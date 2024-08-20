@@ -22,3 +22,7 @@ updates:
   - dependency-name: "node-fetch"
     versions:
     - "> 2"
+  # because it requires Serverless v4
+  - dependency-name: "serverless-offline"
+    versions:
+    - ">= 14"
