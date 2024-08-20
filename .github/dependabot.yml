@@ -22,6 +22,14 @@ updates:
   - dependency-name: "node-fetch"
     versions:
     - "> 2"
+  # because of ESM
+  - dependency-name: "@octokit/rest"
+    versions:
+    - ">= 21"
+  # because of ESM
+  - dependency-name: "@octokit/graphql"
+    versions:
+    - ">= 8"
   # because it requires Serverless v4
   - dependency-name: "serverless-offline"
     versions:
