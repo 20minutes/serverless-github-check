@@ -6360,7 +6360,7 @@ semver@^6.3.0, semver@^6.3.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@^7.5.3, semver@^7.5.4, semver@^7.6.2:
+semver@^7.5.3, semver@^7.5.4, semver@^7.6.3:
   version "7.6.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.3.tgz#980f7b5550bc175fb4dc09403085627f9eb33143"
   integrity sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==
@@ -6400,10 +6400,10 @@ serverless-offline@^13.8.0:
     velocityjs "^2.0.6"
     ws "^8.18.0"
 
-serverless-webpack@^5.14.1:
-  version "5.14.1"
-  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-5.14.1.tgz#4950674a2b011ccb40960b7e70d18be5e7243cf2"
-  integrity sha512-sRt9WpTHf66M/IeT5b/7O81QT7WzzXKZcZX4QhR8KrMU1CtOWHJCjp5pKKv8LPivCX+YyIwY9n0hHEtHoWhHDw==
+serverless-webpack@^5.14.2:
+  version "5.14.2"
+  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-5.14.2.tgz#6f4361bd081a911f215c871c1c5f4e4f20ff32f9"
+  integrity sha512-sMLKuqBVX9w/TJOpoCmjCAEB71uiy340F2drrKkILwaD+fyFGa8eH6+FJUJVzRN0M0F+BccgJw0eBvaSTnC2+w==
   dependencies:
     archiver "^7.0.1"
     bluebird "^3.7.2"
@@ -6412,7 +6412,7 @@ serverless-webpack@^5.14.1:
     glob "^8.1.0"
     is-builtin-module "^3.2.1"
     lodash "^4.17.21"
-    semver "^7.6.2"
+    semver "^7.6.3"
 
 set-function-length@^1.2.1:
   version "1.2.2"
