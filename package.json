@@ -14,7 +14,7 @@
     "@babel/preset-env": "^7.25.4",
     "babel-loader": "^9.2.1",
     "babel-plugin-source-map-support": "^2.2.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-babel": "^5.3.1",
