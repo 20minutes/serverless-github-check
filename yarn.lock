@@ -6372,10 +6372,10 @@ serialize-javascript@^6.0.1:
   dependencies:
     randombytes "^2.1.0"
 
-serverless-offline@^13.8.0:
-  version "13.8.0"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.8.0.tgz#175a755ba5f673cc705d42c286f846d40b18fa74"
-  integrity sha512-eDd/SS1Va+OShzxmcUKsVY/h3Wgsp/0agHMSbZeqJqqpl0Hsf6GJxFmK5aSogw70eht92x/a9JCcbrbnS250rw==
+serverless-offline@^13.8.1:
+  version "13.8.1"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.8.1.tgz#2e044f36f55c808ed5510e2069802fd1a3a12cb3"
+  integrity sha512-7G/ohXl1qtPIAUHSt3K8mVXWWNdCyQnyIgAixEwBKHllAsbeCjv0/bkz/d0vqIkTGpyfVxnQ5MIhn6u3gZCQbg==
   dependencies:
     "@aws-sdk/client-lambda" "^3.636.0"
     "@hapi/boom" "^10.0.1"
