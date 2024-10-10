@@ -646,4 +646,54 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
     expect(firstBody.query).toEqual(expect.stringContaining('event: APPROVE'))
     expect(firstBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
   })
+
+  test('PR is about a minor change from alpha versions', async () => {
+    const mock = fetchMock.sandbox().mock('https://api.github.com/graphql', 200)
+
+    const callback = jest.fn()
+    const githubEvent = {
+      action: 'opened',
+      pull_request: {
+        node_id: 'PR_kwDOHDoTgM5BdXq1',
+        number: 615,
+        title:
+          'build(deps-dev): bump @graphql-eslint/eslint-plugin from 4.0.0-alpha.4 to 4.0.0-alpha.5',
+        body: `Bumps [@graphql-eslint/eslint-plugin](https://github.com/B2o5T/graphql-eslint) from 4.0.0-alpha.4 to 4.0.0-alpha.5`,
+        user: {
+          login: 'dependabot[bot]',
+        },
+        base: {
+          repo: {
+            allow_auto_merge: true,
+          },
+        },
+        auto_merge: null,
+        merged: false,
+        mergeable: true,
+        rebaseable: true,
+      },
+      repository: {
+        full_name: 'foo/bar',
+      },
+    }
+
+    const autoMerge = new AutomergeHandler('GH_TOKEN', mock)
+    await autoMerge.handle(githubEvent, callback)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenCalledWith(null, {
+      body: 'All done!',
+      statusCode: 204,
+    })
+
+    const calls = mock.calls()
+    const firstBody = JSON.parse(calls[0][1].body)
+    expect(firstBody.query).toEqual(expect.stringContaining('addPullRequestReview'))
+    expect(firstBody.query).toEqual(expect.stringContaining('event: APPROVE'))
+    expect(firstBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+
+    const secondBody = JSON.parse(calls[1][1].body)
+    expect(secondBody.query).toEqual(expect.stringContaining('enablePullRequestAutoMerge'))
+    expect(secondBody.variables.pullRequestId).toBe('PR_kwDOHDoTgM5BdXq1')
+  })
 })
