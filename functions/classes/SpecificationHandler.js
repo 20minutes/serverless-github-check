@@ -1,8 +1,8 @@
 import { Handler } from './Handler'
 
 export class SpecificationHandler extends Handler {
-  constructor(githubToken, namespace = '', titleLength = 8, bodyLength = 8, fetch = null) {
-    super(githubToken, fetch)
+  constructor(githubToken, namespace = '', titleLength = 8, bodyLength = 8) {
+    super(githubToken)
 
     this.namespace = namespace
     this.titleLength = titleLength

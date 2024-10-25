@@ -1,8 +1,8 @@
 import { Handler } from './Handler'
 
 export class LabelHandler extends Handler {
-  constructor(githubToken, namespace = '', blockLabels = '', fetch = null) {
-    super(githubToken, fetch)
+  constructor(githubToken, namespace = '', blockLabels = '') {
+    super(githubToken)
 
     this.namespace = namespace
     this.blockLabels = blockLabels
