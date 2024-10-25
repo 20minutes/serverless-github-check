@@ -2,31 +2,16 @@ import { Octokit } from '@octokit/rest'
 import { graphql } from '@octokit/graphql'
 
 export class Handler {
-  constructor(githubToken, fetch = null) {
-    const options = {
+  constructor(githubToken) {
+    this.githubClient = new Octokit({
       auth: githubToken,
-    }
+    })
 
-    if (fetch) {
-      options.request = {
-        fetch,
-      }
-    }
-
-    this.githubClient = new Octokit(options)
-
-    const graphqlOptions = {
+    this.graphql = graphql.defaults({
       headers: {
         authorization: `token ${githubToken}`,
       },
-    }
-
-    if (fetch) {
-      graphqlOptions.request = {
-        fetch,
-      }
-    }
-    this.graphql = graphql.defaults(graphqlOptions)
+    })
   }
 
   // eslint-disable-next-line class-methods-use-this

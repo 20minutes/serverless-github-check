@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock'
+import fetchMock from '@fetch-mock/jest'
 import { LabelHandler } from '../functions/classes/LabelHandler'
 import { handler } from '../functions/label'
 
@@ -112,12 +112,7 @@ describe('Validating GitHub event', () => {
 
 describe('Validating label', () => {
   test('got a blocking label', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -143,7 +138,7 @@ describe('Validating label', () => {
       },
     }
 
-    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
     await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -152,21 +147,20 @@ describe('Validating label', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - Label validation',
-      description: 'Label validation failed',
-      state: 'failure',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - Label validation',
+          description: 'Label validation failed',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('got a blocking label in multiple labels', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -198,7 +192,7 @@ describe('Validating label', () => {
       },
     }
 
-    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
     await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -207,21 +201,20 @@ describe('Validating label', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - Label validation',
-      description: 'Label validation failed',
-      state: 'failure',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - Label validation',
+          description: 'Label validation failed',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('no label found in the PR', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -243,7 +236,7 @@ describe('Validating label', () => {
       },
     }
 
-    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
     await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -252,21 +245,20 @@ describe('Validating label', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - Label validation',
-      description: 'Label validation failed',
-      state: 'failure',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - Label validation',
+          description: 'Label validation failed',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('no blocking label found', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -292,7 +284,7 @@ describe('Validating label', () => {
       },
     }
 
-    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
     await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -301,21 +293,20 @@ describe('Validating label', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - Label validation',
-      description: 'Label validation passed',
-      state: 'success',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - Label validation',
+          description: 'Label validation passed',
+          state: 'success',
+        },
+      }
+    )
   })
 
   test('no blocking label found (with partial label)', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -341,7 +332,7 @@ describe('Validating label', () => {
       },
     }
 
-    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress', mock)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
     await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -350,21 +341,20 @@ describe('Validating label', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - Label validation',
-      description: 'Label validation passed',
-      state: 'success',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - Label validation',
+          description: 'Label validation passed',
+          state: 'success',
+        },
+      }
+    )
   })
 
   test('no blocking label defined', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -390,7 +380,7 @@ describe('Validating label', () => {
       },
     }
 
-    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', '', mock)
+    const label = new LabelHandler('GH_TOKEN', 'THE BRAND', '')
     await label.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -398,11 +388,16 @@ describe('Validating label', () => {
       body: 'Process finished with state: success',
       statusCode: 204,
     })
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - Label validation',
-      description: 'Label validation passed',
-      state: 'success',
-    })
+
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - Label validation',
+          description: 'Label validation passed',
+          state: 'success',
+        },
+      }
+    )
   })
 })

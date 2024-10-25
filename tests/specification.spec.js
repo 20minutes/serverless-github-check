@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock'
+import fetchMock from '@fetch-mock/jest'
 import { SpecificationHandler } from '../functions/classes/SpecificationHandler'
 import { handler } from '../functions/specification'
 
@@ -112,12 +112,7 @@ describe('Validating GitHub event', () => {
 
 describe('Validating specification', () => {
   test('title is too short', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -138,7 +133,7 @@ describe('Validating specification', () => {
       },
     }
 
-    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8)
     await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -147,21 +142,20 @@ describe('Validating specification', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - PR Specification',
-      description: 'Title is too short.',
-      state: 'failure',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - PR Specification',
+          description: 'Title is too short.',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('body is too short', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -182,7 +176,7 @@ describe('Validating specification', () => {
       },
     }
 
-    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8)
     await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -191,21 +185,20 @@ describe('Validating specification', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - PR Specification',
-      description: 'PR description is too short.',
-      state: 'failure',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - PR Specification',
+          description: 'PR description is too short.',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('body is null', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -226,7 +219,7 @@ describe('Validating specification', () => {
       },
     }
 
-    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8)
     await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -235,21 +228,20 @@ describe('Validating specification', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - PR Specification',
-      description: 'PR description is too short.',
-      state: 'failure',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - PR Specification',
+          description: 'PR description is too short.',
+          state: 'failure',
+        },
+      }
+    )
   })
 
   test('body and title are OK', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .mock(
-        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
-        200
-      )
+    fetchMock.mockGlobal().route('*', 200)
 
     const callback = jest.fn()
     const githubEvent = {
@@ -270,7 +262,7 @@ describe('Validating specification', () => {
       },
     }
 
-    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8, mock)
+    const spec = new SpecificationHandler('GH_TOKEN', 'THE BRAND', 8, 8)
     await spec.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -279,11 +271,15 @@ describe('Validating specification', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      context: 'THE BRAND - PR Specification',
-      description: 'All good!',
-      state: 'success',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          context: 'THE BRAND - PR Specification',
+          description: 'All good!',
+          state: 'success',
+        },
+      }
+    )
   })
 })

@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock'
+import fetchMock from '@fetch-mock/jest'
 import { FixupHandler } from '../functions/classes/FixupHandler'
 import { handler } from '../functions/fixup'
 
@@ -111,10 +111,16 @@ describe('Validating GitHub event', () => {
 })
 
 describe('Fixup commits check', () => {
+  afterEach(() => {
+    fetchMock.removeRoutes({ includeSticky: true, includeFallback: true })
+    fetchMock.clearHistory()
+    fetchMock.unmockGlobal()
+  })
+
   test('got a fixup commit', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .get(
+    fetchMock
+      .mockGlobal()
+      .route(
         'https://api.github.com/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         {
           commits: [
@@ -151,7 +157,7 @@ describe('Fixup commits check', () => {
           ],
         }
       )
-      .post(
+      .route(
         'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         200
       )
@@ -178,7 +184,7 @@ describe('Fixup commits check', () => {
       },
     }
 
-    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND', mock)
+    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND')
     await fixup.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -187,18 +193,22 @@ describe('Fixup commits check', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      state: 'failure',
-      description: 'Fixup commits in history, please squash them!',
-      context: 'THE BRAND - Fixup check',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          state: 'failure',
+          description: 'Fixup commits in history, please squash them!',
+          context: 'THE BRAND - Fixup check',
+        },
+      }
+    )
   })
 
   test('got a non-fixup commit', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .get(
+    fetchMock
+      .mockGlobal()
+      .route(
         'https://api.github.com/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         {
           commits: [
@@ -225,7 +235,7 @@ describe('Fixup commits check', () => {
           ],
         }
       )
-      .post(
+      .route(
         'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         200
       )
@@ -252,7 +262,7 @@ describe('Fixup commits check', () => {
       },
     }
 
-    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND', mock)
+    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND')
     await fixup.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -261,18 +271,22 @@ describe('Fixup commits check', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      state: 'success',
-      description: 'No fixup commits in history',
-      context: 'THE BRAND - Fixup check',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          state: 'success',
+          description: 'No fixup commits in history',
+          context: 'THE BRAND - Fixup check',
+        },
+      }
+    )
   })
 
   test('got a merge commit', async () => {
-    const mock = fetchMock
-      .sandbox()
-      .get(
+    fetchMock
+      .mockGlobal()
+      .route(
         'https://api.github.com/repos/foo/bar/compare/1e55a1223ce20c3e7cb776349cb7f8efb7b8851e...ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         {
           commits: [
@@ -292,7 +306,7 @@ describe('Fixup commits check', () => {
           ],
         }
       )
-      .post(
+      .route(
         'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
         200
       )
@@ -319,7 +333,7 @@ describe('Fixup commits check', () => {
       },
     }
 
-    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND', mock)
+    const fixup = new FixupHandler('GH_TOKEN', 'THE BRAND')
     await fixup.handle(githubEvent, callback)
 
     expect(callback).toHaveBeenCalledTimes(1)
@@ -328,11 +342,15 @@ describe('Fixup commits check', () => {
       statusCode: 204,
     })
 
-    const lastOptions = JSON.parse(mock.lastOptions().body)
-    expect(lastOptions).toStrictEqual({
-      state: 'success',
-      description: 'No fixup commits in history',
-      context: 'THE BRAND - Fixup check',
-    })
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          state: 'success',
+          description: 'No fixup commits in history',
+          context: 'THE BRAND - Fixup check',
+        },
+      }
+    )
   })
 })
