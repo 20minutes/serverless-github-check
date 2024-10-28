@@ -10,9 +10,9 @@
   "license": "MIT",
   "devDependencies": {
     "@20minutes/eslint-config": "^1.2.6",
-    "@babel/core": "^7.25.9",
+    "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.25.9",
-    "@babel/preset-env": "^7.25.9",
+    "@babel/preset-env": "^7.26.0",
     "@fetch-mock/jest": "^0.2.0",
     "babel-loader": "^9.2.1",
     "babel-plugin-source-map-support": "^2.2.0",
@@ -34,7 +34,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.25.9",
+    "@babel/runtime": "^7.26.0",
     "@octokit/graphql": "^7.0.2",
     "@octokit/rest": "^20.1.1",
     "semver-diff": "3.1.1",
