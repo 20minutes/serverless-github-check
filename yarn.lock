@@ -1458,10 +1458,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@fetch-mock/jest@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.2.tgz#e77e1a0fe34e187187c9841514c94881bab14e5f"
-  integrity sha512-O6nuzeAfsCIPAgnkqKE5pUMB9BxBYqyyWPw1HoX/mNfswurOtgzjh39CnhisXT9lH+Hh5DekLG2ZZQ0fbHKfwQ==
+"@fetch-mock/jest@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.3.tgz#7f11ee3546921227e4933e1daeba8f363714d439"
+  integrity sha512-5jLdsAn5vC1QnpjdlHFf5ybm+DfGiYCJsOLt4uabFx4R3oBkMKKuhULr/YkSG38tsQ2V/eq4aJZQ+dFhVzCXeg==
   dependencies:
     fetch-mock "12.0.2"
 
