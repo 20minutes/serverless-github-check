@@ -30,7 +30,7 @@
     "regenerator-runtime": "^0.14.1",
     "serverless-offline": "^13.8.3",
     "serverless-webpack": "^5.15.0",
-    "webpack": "^5.96.1",
+    "webpack": "^5.97.0",
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
