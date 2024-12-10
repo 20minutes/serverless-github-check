@@ -28,7 +28,7 @@
     "node-fetch": "2",
     "prettier": "^3.4.2",
     "regenerator-runtime": "^0.14.1",
-    "serverless-offline": "^13.8.3",
+    "serverless-offline": "^13.9.0",
     "serverless-webpack": "^5.15.0",
     "webpack": "^5.97.1",
     "webpack-node-externals": "^3.0.0"
