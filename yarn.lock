@@ -1408,12 +1408,12 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@fetch-mock/jest@^0.2.9":
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.9.tgz#3821f202f1d1a9a4729d374610792c676358c119"
-  integrity sha512-tGce9RYZD6ojFivus4jmPzdYSeWfb17RWL+o2JaYe/8b1jaEDSGYuXd+pDm0bbzt9j9/3Em4lzQfbAYcCAlUEQ==
+"@fetch-mock/jest@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.10.tgz#d4faf63230f9df33cc006c725ea1e0ebe3d02dd8"
+  integrity sha512-nBZUUrYhuCzzmCx0jmGTZOfENf7IhmyYG89WMquHlCkqYSXBJT5PldFg+P107QZcShQPUmqxyLzGHdmsL7mmJw==
   dependencies:
-    fetch-mock "^12.2.1"
+    fetch-mock "^12.3.0"
 
 "@hapi/accept@^6.0.3":
   version "6.0.3"
@@ -4173,10 +4173,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-fetch-mock@^12.2.1:
-  version "12.2.1"
-  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-12.2.1.tgz#84b3e8ebf0d50af7f3af69e3adeee1320942ffa3"
-  integrity sha512-ZUEDYDCr/qeZ3paYVyt6VkmuV/3HhZFVsih1Mt8hAAT34Gsc6HUv2qaFd5nh82BMhOaFjYL2yZbYi5VMuIhXKw==
+fetch-mock@^12.3.0:
+  version "12.3.0"
+  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-12.3.0.tgz#3b584ed53f564260bef27773cdc1aa87130ce8e8"
+  integrity sha512-+ZHzLuzrKpP3u5PZo8ghFP1Kr3UJUTZ5PT/uQZtLv7UagDCVRt1bSzVg6MoTFdjQ0GXsx/crq2t0tGabkbH2yA==
   dependencies:
     "@types/glob-to-regexp" "^0.4.4"
     dequal "^2.0.3"
