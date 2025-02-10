@@ -15,9 +15,9 @@
   },
   "devDependencies": {
     "@20minutes/eslint-config": "^1.2.6",
-    "@babel/core": "^7.26.7",
-    "@babel/eslint-parser": "^7.26.5",
-    "@babel/preset-env": "^7.26.7",
+    "@babel/core": "^7.26.8",
+    "@babel/eslint-parser": "^7.26.8",
+    "@babel/preset-env": "^7.26.8",
     "@fetch-mock/jest": "^0.2.10",
     "babel-loader": "^9.2.1",
     "babel-plugin-source-map-support": "^2.2.0",
