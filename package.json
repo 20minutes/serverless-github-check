@@ -18,7 +18,7 @@
     "@babel/core": "^7.26.9",
     "@babel/eslint-parser": "^7.26.8",
     "@babel/preset-env": "^7.26.9",
-    "@fetch-mock/jest": "^0.2.12",
+    "@fetch-mock/jest": "^0.2.14",
     "babel-loader": "^10.0.0",
     "babel-plugin-source-map-support": "^2.2.0",
     "eslint": "^8.57.1",
