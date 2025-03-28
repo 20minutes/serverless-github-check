@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@20minutes/eslint-config@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@20minutes/eslint-config/-/eslint-config-1.2.6.tgz#63a7f17f5e870eda301c10718dd7583fb522346f"
-  integrity sha512-0iGDuNDwtyTGxSH3zheli7xmPlwNY7//HykMUwKqPf1io/Gi8dwULu7aWUAvnRS8nFuWpIFKQuUJfBxmK5GL+g==
+"@20minutes/eslint-config@^1.2.7":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@20minutes/eslint-config/-/eslint-config-1.2.7.tgz#e9656ec6ebcdd91d08a0b4add34d73982cc2a29c"
+  integrity sha512-dqZe+tOsH3Ieg0WdrEjrtKSGlN8vvsW1LuQ1ADTb3QuLWeOpqf5T63Se8Mvv80f2lhPLFt3tim2leGiqgLUC8A==
 
 "@ampproject/remapping@^2.2.0":
   version "2.3.0"
