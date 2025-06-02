@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@20minutes/eslint-config": "^1.2.7",
-    "@babel/core": "^7.27.3",
+    "@babel/core": "^7.27.4",
     "@babel/eslint-parser": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
     "@fetch-mock/jest": "^0.2.15",
@@ -39,7 +39,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.3",
+    "@babel/runtime": "^7.27.4",
     "@octokit/graphql": "^7.1.1",
     "@octokit/rest": "^20.1.2",
     "semver-diff": "3.1.1",
