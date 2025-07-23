@@ -29,7 +29,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.3",
     "eslint-plugin-react": "^7.37.5",
-    "jest": "^30.0.4",
+    "jest": "^30.0.5",
     "node-fetch": "2",
     "prettier": "^3.6.2",
     "regenerator-runtime": "^0.14.1",
