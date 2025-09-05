@@ -34,7 +34,7 @@
     "prettier": "^3.6.2",
     "regenerator-runtime": "^0.14.1",
     "serverless-offline": "^13.9.0",
-    "serverless-webpack": "^5.15.2",
+    "serverless-webpack": "^5.15.3",
     "webpack": "^5.101.3",
     "webpack-node-externals": "^3.0.0"
   },
