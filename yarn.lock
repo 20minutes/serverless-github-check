@@ -1485,12 +1485,12 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@fetch-mock/jest@^0.2.19":
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.19.tgz#f737dc205b1e4136660b35f55583c390b38d4bb2"
-  integrity sha512-mGpRxB7YkLulbX8jcXAS5RbyVUp4DCzSzE5jVHh8Lr4X/vBxIhBYXusSHFaBDsfnD3W96rfCbCQylD41AxGrKA==
+"@fetch-mock/jest@^0.2.20":
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.20.tgz#85dc2dd9afb9022a6e0eda1d9f3351f3a5fa70c5"
+  integrity sha512-DGX2bhBInodaWPMV3+UZ530aVM3wDj16sAPjFzkrwb0JwNWIQK07CNbYprQ3Tmd2ixDJeaNx2E0aNb+hRb8FFA==
   dependencies:
-    fetch-mock "^12.5.6"
+    fetch-mock "^12.6.0"
 
 "@hapi/accept@^6.0.3":
   version "6.0.3"
@@ -4493,10 +4493,10 @@ fb-watchman@^2.0.2:
   dependencies:
     bser "2.1.1"
 
-fetch-mock@^12.5.6:
-  version "12.5.6"
-  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-12.5.6.tgz#e7b4f2c10b9a63cc048e4cb79706e0cdba2f0803"
-  integrity sha512-w7r26n4P5nbXGhTnmzgNDUb6Hzx8DTh6tBKIk9hd2NNRhv5i9r+gUFslNzttxh9doAGLUaxefnjZT0EvYTL+AA==
+fetch-mock@^12.6.0:
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-12.6.0.tgz#e5ed5d471eeeb29478260ce48385dca6773b105e"
+  integrity sha512-oAy0OqAvjAvduqCeWveBix7LLuDbARPqZZ8ERYtBcCURA3gy7EALA3XWq0tCNxsSg+RmmJqyaeeZlOCV9abv6w==
   dependencies:
     "@types/glob-to-regexp" "^0.4.4"
     dequal "^2.0.3"
