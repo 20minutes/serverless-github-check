@@ -28,6 +28,7 @@ custom:
     webpack:
         includeModules: true
         packager: yarn
+        excludeRegex: 'node_modules/(@aws-sdk|@aws-crypto|(.+\.(md|JPG|jpg|jpeg)$))|yarn\.lock'
 
 functions:
     specification:

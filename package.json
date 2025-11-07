@@ -43,7 +43,8 @@
     "@octokit/graphql": "^7.1.1",
     "@octokit/rest": "^20.1.2",
     "semver-diff": "3.1.1",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "uri-js": "npm:uri-js-replace"
   },
   "jest": {
     "verbose": true,
