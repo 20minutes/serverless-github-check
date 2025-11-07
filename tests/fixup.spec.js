@@ -198,7 +198,7 @@ describe('Fixup commits check', () => {
       {
         body: {
           state: 'failure',
-          description: 'Fixup commits in history, please squash them!',
+          description: 'Fixup commits in history, squash them to merge',
           context: 'THE BRAND - Fixup check',
         },
       }

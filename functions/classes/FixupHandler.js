@@ -24,7 +24,7 @@ export class FixupHandler extends Handler {
       },
       failure: {
         state: 'failure',
-        description: 'Fixup commits in history, please squash them!',
+        description: 'Fixup commits in history, squash them to merge',
         context: `${this.namespace} - Fixup check`,
       },
     }
