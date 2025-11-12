@@ -21,7 +21,7 @@
     "@fetch-mock/jest": "^0.2.20",
     "babel-loader": "^10.0.0",
     "babel-plugin-source-map-support": "^2.2.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.39.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-babel": "^5.3.1",
