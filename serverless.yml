@@ -83,3 +83,15 @@ functions:
                     path: webhook/auto-merge
                     method: post
                     cors: true
+
+    artifacts:
+        handler: functions/artifacts.handler
+        description: Check if an artifact in deps to block merge
+        environment:
+            ARTIFACTS_REGEX: '(fixtures\.20mn\.it|localhost:)'
+        events:
+            -
+                http:
+                    path: webhook/artifacts
+                    method: post
+                    cors: true
