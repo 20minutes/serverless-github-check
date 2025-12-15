@@ -40,6 +40,8 @@ export class ArtifactsHandler extends Handler {
     const file = files.data.find(({ filename }) => filename.includes('package.json'))
 
     if (!file) {
+      console.log('No package.json found in PR')
+
       response = await this.updateStatus(body, payload.success)
 
       return callback(null, response)
@@ -47,6 +49,8 @@ export class ArtifactsHandler extends Handler {
 
     const refMatch = file.contents_url.match(/ref=([a-z0-9]+)/)
     if (!refMatch?.[1]) {
+      console.log('no ref in package.json diff url?')
+
       response = await this.updateStatus(body, payload.success)
 
       return callback(null, response)
@@ -59,13 +63,32 @@ export class ArtifactsHandler extends Handler {
       ref: refMatch[1],
     })
 
-    const match = Buffer.from(content.data.content.toString('utf8'), 'base64')
-      .toString('ascii')
-      .match(this.artifactsRegex)
+    let packageJson = ''
+    try {
+      packageJson = JSON.parse(
+        Buffer.from(content.data.content.toString('utf8'), 'base64').toString('ascii')
+      )
+    } catch (e) {
+      response = await this.updateStatus(body, payload.success)
+      console.log('Parsing package.json failed:', e)
+
+      return callback(null, response)
+    }
+
+    const deps = {
+      dependencies: packageJson.dependencies || {},
+      devDependencies: packageJson.devDependencies || {},
+    }
+
+    const match = JSON.stringify(deps).match(this.artifactsRegex)
 
     if (match === null) {
+      console.log('No match, success.')
+
       response = await this.updateStatus(body, payload.success)
     } else {
+      console.log('Match found, failure.')
+
       response = await this.updateStatus(body, payload.failure)
     }
 
