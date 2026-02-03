@@ -14,7 +14,6 @@ export class Handler {
     })
   }
 
-  // eslint-disable-next-line class-methods-use-this
   validateEvent(body) {
     // when creating the webhook
     if (body && 'hook' in body) {
