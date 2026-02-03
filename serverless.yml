@@ -27,7 +27,7 @@ package:
 custom:
     webpack:
         webpackConfig: 'webpack.config.cjs'
-        includeModules: true
+        includeModules: false
         packager: yarn
         excludeRegex: 'node_modules/(@aws-sdk|@aws-crypto|(.+\.(md|JPG|jpg|jpeg)$))|yarn\.lock'
 

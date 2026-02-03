@@ -1,5 +1,5 @@
 import { GraphqlResponseError } from '@octokit/graphql'
-import semverDiff from 'semver/functions/diff'
+import semverDiff from 'semver/functions/diff.js'
 import { Handler } from './Handler.js'
 
 export class AutomergeHandler extends Handler {

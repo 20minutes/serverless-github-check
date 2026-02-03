@@ -17,11 +17,10 @@
   "devDependencies": {
     "@20minutes/eslint-config": "^2.0.0",
     "@fetch-mock/jest": "^0.2.20",
+    "@jest/globals": "^30.2.0",
     "eslint": "^9.39.2",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -30,12 +29,11 @@
     "prettier": "^3.8.1",
     "serverless-offline": "^13.9.0",
     "serverless-webpack": "^5.15.3",
-    "webpack": "^5.104.1",
-    "webpack-node-externals": "^3.0.0"
+    "webpack": "^5.104.1"
   },
   "dependencies": {
-    "@octokit/graphql": "^7.1.1",
-    "@octokit/rest": "^20.1.2",
+    "@octokit/graphql": "^9.0.3",
+    "@octokit/rest": "^22.0.1",
     "semver": "^7.7.3",
     "source-map-support": "^0.5.21",
     "uri-js": "npm:uri-js-replace"
@@ -44,7 +42,6 @@
     "verbose": true,
     "clearMocks": true,
     "testEnvironment": "node",
-    "transform": {},
     "collectCoverage": true,
     "collectCoverageFrom": [
       "functions/**/*.js",
