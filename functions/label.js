@@ -1,4 +1,4 @@
-import { LabelHandler } from './classes/LabelHandler'
+const { LabelHandler } = require('./classes/LabelHandler')
 
 const label = new LabelHandler(
   process.env.GITHUB_TOKEN,
@@ -6,7 +6,7 @@ const label = new LabelHandler(
   process.env.BLOCK_LABELS
 )
 
-export async function handler(event, context, callback) {
+async function handler(event, context, callback) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
     return callback(null, {
       statusCode: 500,
@@ -16,3 +16,5 @@ export async function handler(event, context, callback) {
 
   return label.handle(JSON.parse(event.body), callback)
 }
+
+module.exports = { handler }

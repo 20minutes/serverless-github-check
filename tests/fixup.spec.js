@@ -1,6 +1,6 @@
-import fetchMock from '@fetch-mock/jest'
-import { FixupHandler } from '../functions/classes/FixupHandler'
-import { handler } from '../functions/fixup'
+const fetchMock = require('@fetch-mock/jest').default
+const { FixupHandler } = require('../functions/classes/FixupHandler')
+const { handler } = require('../functions/fixup')
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {

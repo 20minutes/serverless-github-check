@@ -1,7 +1,7 @@
-import { Octokit } from '@octokit/rest'
-import { graphql } from '@octokit/graphql'
+const { Octokit } = require('@octokit/rest')
+const { graphql } = require('@octokit/graphql')
 
-export class Handler {
+class Handler {
   constructor(githubToken) {
     this.githubClient = new Octokit({
       auth: githubToken,
@@ -88,3 +88,5 @@ export class Handler {
     }
   }
 }
+
+module.exports = { Handler }

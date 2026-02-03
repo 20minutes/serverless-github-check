@@ -1,8 +1,8 @@
-import { AutomergeHandler } from './classes/AutomergeHandler'
+const { AutomergeHandler } = require('./classes/AutomergeHandler')
 
 const autoMerge = new AutomergeHandler(process.env.GITHUB_TOKEN)
 
-export async function handler(event, context, callback) {
+async function handler(event, context, callback) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
     return callback(null, {
       statusCode: 500,
@@ -12,3 +12,5 @@ export async function handler(event, context, callback) {
 
   return autoMerge.handle(JSON.parse(event.body), callback)
 }
+
+module.exports = { handler }

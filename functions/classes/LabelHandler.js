@@ -1,6 +1,6 @@
-import { Handler } from './Handler'
+const { Handler } = require('./Handler')
 
-export class LabelHandler extends Handler {
+class LabelHandler extends Handler {
   constructor(githubToken, namespace = '', blockLabels = '') {
     super(githubToken)
 
@@ -70,3 +70,5 @@ export class LabelHandler extends Handler {
     return callback(null, response)
   }
 }
+
+module.exports = { LabelHandler }

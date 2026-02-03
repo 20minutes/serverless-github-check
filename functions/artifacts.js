@@ -1,4 +1,4 @@
-import { ArtifactsHandler } from './classes/ArtifactsHandler'
+const { ArtifactsHandler } = require('./classes/ArtifactsHandler')
 
 const artifacts = new ArtifactsHandler(
   process.env.GITHUB_TOKEN,
@@ -6,7 +6,7 @@ const artifacts = new ArtifactsHandler(
   process.env.ARTIFACTS_REGEX
 )
 
-export async function handler(event, context, callback) {
+async function handler(event, context, callback) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
     return callback(null, {
       statusCode: 500,
@@ -16,3 +16,5 @@ export async function handler(event, context, callback) {
 
   return artifacts.handle(JSON.parse(event.body), callback)
 }
+
+module.exports = { handler }

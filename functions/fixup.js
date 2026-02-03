@@ -1,8 +1,8 @@
-import { FixupHandler } from './classes/FixupHandler'
+const { FixupHandler } = require('./classes/FixupHandler')
 
 const fixup = new FixupHandler(process.env.GITHUB_TOKEN, process.env.NAMESPACE)
 
-export async function handler(event, context, callback) {
+async function handler(event, context, callback) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
     return callback(null, {
       statusCode: 500,
@@ -12,3 +12,5 @@ export async function handler(event, context, callback) {
 
   return fixup.handle(JSON.parse(event.body), callback)
 }
+
+module.exports = { handler }
