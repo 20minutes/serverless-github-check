@@ -1,6 +1,6 @@
-const { Handler } = require('./Handler')
+import { Handler } from './Handler.js'
 
-class SpecificationHandler extends Handler {
+export class SpecificationHandler extends Handler {
   constructor(githubToken, namespace = '', titleLength = 8, bodyLength = 8) {
     super(githubToken)
 
@@ -43,5 +43,3 @@ class SpecificationHandler extends Handler {
     return callback(null, response)
   }
 }
-
-module.exports = { SpecificationHandler }

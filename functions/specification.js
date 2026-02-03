@@ -1,4 +1,4 @@
-const { SpecificationHandler } = require('./classes/SpecificationHandler')
+import { SpecificationHandler } from './classes/SpecificationHandler.js'
 
 const spec = new SpecificationHandler(
   process.env.GITHUB_TOKEN,
@@ -7,7 +7,7 @@ const spec = new SpecificationHandler(
   process.env.CHECK_BODY_LENGTH
 )
 
-async function handler(event, context, callback) {
+export async function handler(event, context, callback) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
     return callback(null, {
       statusCode: 500,
@@ -17,5 +17,3 @@ async function handler(event, context, callback) {
 
   return spec.handle(JSON.parse(event.body), callback)
 }
-
-module.exports = { handler }

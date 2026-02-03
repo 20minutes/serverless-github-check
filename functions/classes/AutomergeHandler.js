@@ -1,8 +1,8 @@
-const { GraphqlResponseError } = require('@octokit/graphql')
-const semverDiff = require('semver-diff')
-const { Handler } = require('./Handler')
+import { GraphqlResponseError } from '@octokit/graphql'
+import semverDiff from 'semver/functions/diff'
+import { Handler } from './Handler.js'
 
-class AutomergeHandler extends Handler {
+export class AutomergeHandler extends Handler {
   async handle(body, callback) {
     const response = this.validateEvent(body)
 
@@ -154,5 +154,3 @@ class AutomergeHandler extends Handler {
     })
   }
 }
-
-module.exports = { AutomergeHandler }

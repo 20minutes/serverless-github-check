@@ -1,6 +1,7 @@
-const fetchMock = require('@fetch-mock/jest').default
-const { LabelHandler } = require('../functions/classes/LabelHandler')
-const { handler } = require('../functions/label')
+import fetchMock from '@fetch-mock/jest'
+import { jest } from '@jest/globals'
+import { LabelHandler } from '../functions/classes/LabelHandler.js'
+import { handler } from '../functions/label.js'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {

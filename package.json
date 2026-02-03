@@ -1,9 +1,10 @@
 {
   "name": "serverless-github-check",
+  "type": "module",
   "main": "handler.js",
   "scripts": {
-    "test": "jest --silent",
-    "test:watch": "jest --watch",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --silent",
+    "test:watch": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
     "lint": "eslint functions/ tests/"
   },
   "author": "20 Minutes <web-tech@20minutes.fr>",
@@ -24,7 +25,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "jest": "^30.2.0",
-    "node-fetch": "2",
+    "node-fetch": "3.3.2",
     "prettier": "^3.8.1",
     "serverless-offline": "^13.9.0",
     "serverless-webpack": "^5.15.3",
@@ -34,7 +35,7 @@
   "dependencies": {
     "@octokit/graphql": "^7.1.1",
     "@octokit/rest": "^20.1.2",
-    "semver-diff": "3.1.1",
+    "semver": "^7.7.3",
     "source-map-support": "^0.5.21",
     "uri-js": "npm:uri-js-replace"
   },
@@ -42,6 +43,7 @@
     "verbose": true,
     "clearMocks": true,
     "testEnvironment": "node",
+    "transform": {},
     "collectCoverage": true,
     "collectCoverageFrom": [
       "functions/**/*.js",

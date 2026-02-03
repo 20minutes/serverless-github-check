@@ -1,6 +1,6 @@
-const { Handler } = require('./Handler')
+import { Handler } from './Handler.js'
 
-class ArtifactsHandler extends Handler {
+export class ArtifactsHandler extends Handler {
   constructor(githubToken, namespace = '', artifactsRegex = '') {
     super(githubToken)
 
@@ -95,5 +95,3 @@ class ArtifactsHandler extends Handler {
     return callback(null, response)
   }
 }
-
-module.exports = { ArtifactsHandler }
