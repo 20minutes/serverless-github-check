@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@octokit/graphql": "^7.1.1",
-    "@octokit/rest": "^20.1.2",
+    "@octokit/rest": "^22.0.1",
     "semver": "^7.7.3",
     "source-map-support": "^0.5.21",
     "uri-js": "npm:uri-js-replace"
