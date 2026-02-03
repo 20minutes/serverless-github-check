@@ -1,6 +1,6 @@
 import { GraphqlResponseError } from '@octokit/graphql'
-import semverDiff from 'semver-diff'
-import { Handler } from './Handler'
+import semverDiff from 'semver/functions/diff'
+import { Handler } from './Handler.js'
 
 export class AutomergeHandler extends Handler {
   async handle(body, callback) {

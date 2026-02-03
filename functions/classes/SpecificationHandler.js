@@ -1,4 +1,4 @@
-import { Handler } from './Handler'
+import { Handler } from './Handler.js'
 
 export class SpecificationHandler extends Handler {
   constructor(githubToken, namespace = '', titleLength = 8, bodyLength = 8) {

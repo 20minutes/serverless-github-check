@@ -1,6 +1,7 @@
 import fetchMock from '@fetch-mock/jest'
-import { FixupHandler } from '../functions/classes/FixupHandler'
-import { handler } from '../functions/fixup'
+import { jest } from '@jest/globals'
+import { FixupHandler } from '../functions/classes/FixupHandler.js'
+import { handler } from '../functions/fixup.js'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {

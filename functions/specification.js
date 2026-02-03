@@ -1,4 +1,4 @@
-import { SpecificationHandler } from './classes/SpecificationHandler'
+import { SpecificationHandler } from './classes/SpecificationHandler.js'
 
 const spec = new SpecificationHandler(
   process.env.GITHUB_TOKEN,

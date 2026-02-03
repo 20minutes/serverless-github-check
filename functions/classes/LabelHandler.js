@@ -1,4 +1,4 @@
-import { Handler } from './Handler'
+import { Handler } from './Handler.js'
 
 export class LabelHandler extends Handler {
   constructor(githubToken, namespace = '', blockLabels = '') {

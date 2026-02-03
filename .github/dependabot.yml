@@ -3,33 +3,11 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: daily
-    time: "02:00"
+    interval: weekly
+    time: "04:00"
     timezone: Europe/Paris
   open-pull-requests-limit: 10
-  reviewers:
-  - j0k3r
-  groups:
-    babel-dependencies:
-      patterns:
-        - "*babel*"
   ignore:
-  # because of ESM
-  - dependency-name: "semver-diff"
-    versions:
-    - ">= 4.0.0"
-  # because of ESM
-  - dependency-name: "node-fetch"
-    versions:
-    - "> 2"
-  # because of ESM
-  - dependency-name: "@octokit/rest"
-    versions:
-    - ">= 21"
-  # because of ESM
-  - dependency-name: "@octokit/graphql"
-    versions:
-    - ">= 8"
   # because it requires Serverless v4
   - dependency-name: "serverless-offline"
     versions:

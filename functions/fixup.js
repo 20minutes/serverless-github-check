@@ -1,4 +1,4 @@
-import { FixupHandler } from './classes/FixupHandler'
+import { FixupHandler } from './classes/FixupHandler.js'
 
 const fixup = new FixupHandler(process.env.GITHUB_TOKEN, process.env.NAMESPACE)
 

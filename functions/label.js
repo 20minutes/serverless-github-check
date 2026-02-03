@@ -1,4 +1,4 @@
-import { LabelHandler } from './classes/LabelHandler'
+import { LabelHandler } from './classes/LabelHandler.js'
 
 const label = new LabelHandler(
   process.env.GITHUB_TOKEN,

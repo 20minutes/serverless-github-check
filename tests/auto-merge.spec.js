@@ -1,6 +1,7 @@
 import fetchMock from '@fetch-mock/jest'
-import { AutomergeHandler } from '../functions/classes/AutomergeHandler'
-import { handler } from '../functions/auto-merge'
+import { jest } from '@jest/globals'
+import { AutomergeHandler } from '../functions/classes/AutomergeHandler.js'
+import { handler } from '../functions/auto-merge.js'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {

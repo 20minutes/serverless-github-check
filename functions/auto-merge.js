@@ -1,4 +1,4 @@
-import { AutomergeHandler } from './classes/AutomergeHandler'
+import { AutomergeHandler } from './classes/AutomergeHandler.js'
 
 const autoMerge = new AutomergeHandler(process.env.GITHUB_TOKEN)
 

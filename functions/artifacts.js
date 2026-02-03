@@ -1,4 +1,4 @@
-import { ArtifactsHandler } from './classes/ArtifactsHandler'
+import { ArtifactsHandler } from './classes/ArtifactsHandler.js'
 
 const artifacts = new ArtifactsHandler(
   process.env.GITHUB_TOKEN,
