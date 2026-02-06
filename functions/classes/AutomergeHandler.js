@@ -3,11 +3,11 @@ import semverDiff from 'semver/functions/diff.js'
 import { Handler } from './Handler.js'
 
 export class AutomergeHandler extends Handler {
-  async handle(body, callback) {
+  async handle(body) {
     const response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
@@ -15,19 +15,19 @@ export class AutomergeHandler extends Handler {
     if (!['opened', 'reopened', 'synchronize'].includes(body?.action)) {
       console.log(`Wrong action: ${body?.action}`)
 
-      return callback(null, {
+      return {
         statusCode: 204,
         body: 'Wrong action',
-      })
+      }
     }
 
     if (body?.pull_request?.mergeable === false) {
       console.log(`PR can't be merged`)
 
-      return callback(null, {
+      return {
         statusCode: 204,
         body: `PR can't be merged`,
-      })
+      }
     }
 
     if (body?.pull_request?.base?.repo?.allow_auto_merge !== true) {
@@ -35,19 +35,19 @@ export class AutomergeHandler extends Handler {
         `Repo does not allow auto merge: ${body?.pull_request?.base?.repo?.allow_auto_merge}`
       )
 
-      return callback(null, {
+      return {
         statusCode: 204,
         body: 'Repo does not allow auto merge',
-      })
+      }
     }
 
     if (body?.pull_request?.user?.login !== 'dependabot[bot]') {
       console.log(`Not a PR from dependabot: ${body?.pull_request?.user?.login}`)
 
-      return callback(null, {
+      return {
         statusCode: 204,
         body: 'Not a PR from dependabot',
-      })
+      }
     }
 
     let updateType
@@ -69,22 +69,22 @@ export class AutomergeHandler extends Handler {
 
       updateType = res === false ? 'minor' : 'major'
     } else {
-      console.log(`Unable to dermine the update type...`)
+      console.log(`Unable to determine the update type...`)
       console.log(JSON.stringify(body.pull_request))
 
-      return callback(null, {
+      return {
         statusCode: 204,
-        body: 'Unable to dermine the update type',
-      })
+        body: 'Unable to determine the update type',
+      }
     }
 
     if (updateType === 'major') {
       console.log(`Update is a major version: ${body?.pull_request?.title}`)
 
-      return callback(null, {
+      return {
         statusCode: 204,
         body: 'Update is a major version',
-      })
+      }
     }
 
     // validate PR
@@ -148,9 +148,9 @@ export class AutomergeHandler extends Handler {
       }
     }
 
-    return callback(null, {
+    return {
       statusCode: 204,
       body: 'All done!',
-    })
+    }
   }
 }

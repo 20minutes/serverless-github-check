@@ -2,13 +2,13 @@ import { FixupHandler } from './classes/FixupHandler.js'
 
 const fixup = new FixupHandler(process.env.GITHUB_TOKEN, process.env.NAMESPACE)
 
-export async function handler(event, context, callback) {
+export async function handler(event) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
-    return callback(null, {
+    return {
       statusCode: 500,
       body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
-    })
+    }
   }
 
-  return fixup.handle(JSON.parse(event.body), callback)
+  return fixup.handle(JSON.parse(event.body))
 }

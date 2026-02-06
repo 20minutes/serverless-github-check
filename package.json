@@ -3,8 +3,9 @@
   "type": "module",
   "main": "handler.js",
   "scripts": {
-    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --silent",
-    "test:watch": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
+    "test": "vitest run --silent",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "lint": "eslint functions/ tests/"
   },
   "author": "20 Minutes <web-tech@20minutes.fr>",
@@ -12,46 +13,29 @@
   "engines": {
     "npm": "please-use-yarn-instead",
     "yarn": ">= 1.22.0",
-    "node": ">= 22"
+    "node": ">= 24"
   },
   "devDependencies": {
     "@20minutes/eslint-config": "^2.0.0",
-    "@fetch-mock/jest": "^0.2.20",
-    "@jest/globals": "^30.2.0",
+    "@fetch-mock/vitest": "^0.2.18",
+    "@vitest/coverage-v8": "^4.0.18",
+    "esbuild": "^0.27.3",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "jest": "^30.2.0",
-    "node-fetch": "3.3.2",
     "prettier": "^3.8.1",
+    "serverless-esbuild": "^1.57.0",
     "serverless-offline": "^13.9.0",
-    "serverless-webpack": "^5.15.3",
-    "webpack": "^5.104.1"
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@octokit/graphql": "^9.0.3",
     "@octokit/rest": "^22.0.1",
-    "semver": "^7.7.3",
-    "source-map-support": "^0.5.21",
+    "semver": "^7.7.4",
     "uri-js": "npm:uri-js-replace"
-  },
-  "jest": {
-    "verbose": true,
-    "clearMocks": true,
-    "testEnvironment": "node",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "functions/**/*.js",
-      "!**/node_modules/**"
-    ],
-    "coverageDirectory": "./build",
-    "coverageReporters": [
-      "html",
-      "text-summary"
-    ]
   },
   "resolutions": {
     "uri-js": "npm:uri-js-replace"

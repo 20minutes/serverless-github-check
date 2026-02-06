@@ -1,42 +1,28 @@
-import fetchMock from '@fetch-mock/jest'
-import { jest } from '@jest/globals'
+import fetchMock from '@fetch-mock/vitest'
 import { LabelHandler } from '../functions/classes/LabelHandler.js'
 import { handler } from '../functions/label.js'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {
-    const callback = jest.fn()
-
-    await handler(
-      {
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: 'payload%3D%7B%22zen%22%3A%22Non-blocking%2Bis%2Bbetter%2Bthan%2Bblocking.%22%7D',
-      },
-      {},
-      callback
-    )
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: 'payload%3D%7B%22zen%22%3A%22Non-blocking%2Bis%2Bbetter%2Bthan%2Bblocking.%22%7D',
+    })
+    expect(response).toEqual({
       body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
       statusCode: 500,
     })
   })
 
   test('bad event body', async () => {
-    const callback = jest.fn()
-
-    await handler({ body: '{}' }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: '{}' })
+    expect(response).toEqual({
       body: 'Event is not a Pull Request',
       statusCode: 500,
     })
   })
 
   test('hook event does not include PR', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -51,17 +37,14 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'This webhook needs the "pull_request" event. Please tick it.',
       statusCode: 500,
     })
   })
 
   test('hook event is ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -76,17 +59,14 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Hello diego, the webhook is now enabled for 20minutes/serverless-github-check, enjoy!',
       statusCode: 200,
     })
   })
 
   test('hook event for an organization is ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -101,10 +81,8 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Hello diego, the webhook is now enabled for the organization 20minutes, enjoy!',
       statusCode: 200,
     })
@@ -114,8 +92,6 @@ describe('Validating GitHub event', () => {
 describe('Validating label', () => {
   test('got a blocking label', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         number: 42,
@@ -140,10 +116,8 @@ describe('Validating label', () => {
     }
 
     const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
-    await label.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await label.handle(githubEvent)
+    expect(response).toEqual({
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
@@ -162,8 +136,6 @@ describe('Validating label', () => {
 
   test('got a blocking label in multiple labels', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         number: 42,
@@ -194,10 +166,8 @@ describe('Validating label', () => {
     }
 
     const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
-    await label.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await label.handle(githubEvent)
+    expect(response).toEqual({
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
@@ -216,8 +186,6 @@ describe('Validating label', () => {
 
   test('no label found in the PR', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         number: 42,
@@ -238,10 +206,8 @@ describe('Validating label', () => {
     }
 
     const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
-    await label.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await label.handle(githubEvent)
+    expect(response).toEqual({
       body: 'Process finished with state: failure',
       statusCode: 204,
     })
@@ -260,8 +226,6 @@ describe('Validating label', () => {
 
   test('no blocking label found', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         number: 42,
@@ -286,10 +250,8 @@ describe('Validating label', () => {
     }
 
     const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
-    await label.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await label.handle(githubEvent)
+    expect(response).toEqual({
       body: 'Process finished with state: success',
       statusCode: 204,
     })
@@ -308,8 +270,6 @@ describe('Validating label', () => {
 
   test('no blocking label found (with partial label)', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         number: 42,
@@ -334,10 +294,8 @@ describe('Validating label', () => {
     }
 
     const label = new LabelHandler('GH_TOKEN', 'THE BRAND', 'wip , work in progress')
-    await label.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await label.handle(githubEvent)
+    expect(response).toEqual({
       body: 'Process finished with state: success',
       statusCode: 204,
     })
@@ -356,8 +314,6 @@ describe('Validating label', () => {
 
   test('no blocking label defined', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       pull_request: {
         number: 42,
@@ -382,10 +338,8 @@ describe('Validating label', () => {
     }
 
     const label = new LabelHandler('GH_TOKEN', 'THE BRAND', '')
-    await label.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await label.handle(githubEvent)
+    expect(response).toEqual({
       body: 'Process finished with state: success',
       statusCode: 204,
     })

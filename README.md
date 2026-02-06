@@ -28,7 +28,7 @@ We have 4 functions available:
 
 ## Prerequisites
 
-- Node.js 22
+- Node.js 24
 - OSS Serverless (`npm install -g osls`)
 - An AWS account
 - Defined [provider credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
@@ -61,7 +61,7 @@ You can update some options from the `serverless.yml` file:
 - `NAMESPACE`: change the namespace used in the PR check (displayed at the bottom of each PR)
 - `CHECK_BODY_LENGTH`: change the minimun length of the body of the PR
 - `CHECK_TITLE_LENGTH`: change the minimun length of the title of the PR
-- `BLOCK_LABELS`: define which label will block a PR (coma separated strings)
+- `BLOCK_LABELS`: define which label will block a PR (comma separated strings)
 
 ## Info
 

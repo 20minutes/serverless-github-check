@@ -3,12 +3,12 @@ frameworkVersion: "^3.43.1"
 service: serverless-github-check
 
 plugins:
-    - serverless-webpack
+    - serverless-esbuild
     - serverless-offline
 
 provider:
     name: aws
-    runtime: nodejs22.x
+    runtime: nodejs24.x
     profile: default
     region: ${opt:region, 'eu-west-1'}
     logRetentionInDays: 30
@@ -25,11 +25,22 @@ package:
     individually: true
 
 custom:
-    webpack:
-        webpackConfig: 'webpack.config.cjs'
-        includeModules: false
+    esbuild:
+        bundle: true
+        sourcemap: true
+        minify: true
+        target: node24
+        platform: node
+        format: esm
+        outputFileExtension: .mjs
+        banner:
+            js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);"
+        exclude:
+            - '@aws-sdk/*'
+            - '@aws-crypto/*'
         packager: yarn
-        excludeRegex: 'node_modules/(@aws-sdk|@aws-crypto|(.+\.(md|JPG|jpg|jpeg)$))|yarn\.lock'
+        installExtraArgs:
+            - '--frozen-lockfile'
 
 functions:
     specification:
@@ -55,7 +66,7 @@ functions:
         handler: functions/label.handler
         description: Check for GitHub PR labels to block merge
         environment:
-            # coma separated labels
+            # comma separated labels
             BLOCK_LABELS: "Work In Progress,Waiting For Change,Waiting For Travis,Do Not Merge,Blocked"
         events:
             -
