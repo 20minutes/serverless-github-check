@@ -9,11 +9,11 @@ export class SpecificationHandler extends Handler {
     this.bodyLength = bodyLength
   }
 
-  async handle(body, callback) {
+  async handle(body) {
     let response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
@@ -40,6 +40,6 @@ export class SpecificationHandler extends Handler {
 
     response = await this.updateStatus(body, payload)
 
-    return callback(null, response)
+    return response
   }
 }

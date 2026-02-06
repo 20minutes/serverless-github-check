@@ -1,42 +1,28 @@
-import fetchMock from '@fetch-mock/jest'
-import { jest } from '@jest/globals'
+import fetchMock from '@fetch-mock/vitest'
 import { AutomergeHandler } from '../functions/classes/AutomergeHandler.js'
 import { handler } from '../functions/auto-merge.js'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {
-    const callback = jest.fn()
-
-    await handler(
-      {
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: 'payload%3D%7B%22zen%22%3A%22Non-blocking%2Bis%2Bbetter%2Bthan%2Bblocking.%22%7D',
-      },
-      {},
-      callback
-    )
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: 'payload%3D%7B%22zen%22%3A%22Non-blocking%2Bis%2Bbetter%2Bthan%2Bblocking.%22%7D',
+    })
+    expect(response).toEqual({
       body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
       statusCode: 500,
     })
   })
 
   test('bad event body', async () => {
-    const callback = jest.fn()
-
-    await handler({ body: '{}' }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: '{}' })
+    expect(response).toEqual({
       body: 'Event is not a Pull Request',
       statusCode: 500,
     })
   })
 
   test('hook event does not include PR', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -51,17 +37,14 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'This webhook needs the "pull_request" event. Please tick it.',
       statusCode: 500,
     })
   })
 
   test('hook event is ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -76,17 +59,14 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Hello diego, the webhook is now enabled for 20minutes/serverless-github-check, enjoy!',
       statusCode: 200,
     })
   })
 
   test('hook event for an organization is ok', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       zen: 'Speak like a human.',
       hook_id: 1,
@@ -101,10 +81,8 @@ describe('Validating GitHub event', () => {
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Hello diego, the webhook is now enabled for the organization 20minutes, enjoy!',
       statusCode: 200,
     })
@@ -114,8 +92,6 @@ describe('Validating GitHub event', () => {
 describe('Auto merge', () => {
   test('got a PR approved & merged', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -141,10 +117,8 @@ describe('Auto merge', () => {
     }
 
     const autoMerge = new AutomergeHandler('GH_TOKEN')
-    await autoMerge.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await autoMerge.handle(githubEvent)
+    expect(response).toEqual({
       body: 'All done!',
       statusCode: 204,
     })
@@ -163,8 +137,6 @@ describe('Auto merge', () => {
 
   test('got a PR approved & merged with one deps in grouped deps', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -190,10 +162,8 @@ describe('Auto merge', () => {
     }
 
     const autoMerge = new AutomergeHandler('GH_TOKEN')
-    await autoMerge.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await autoMerge.handle(githubEvent)
+    expect(response).toEqual({
       body: 'All done!',
       statusCode: 204,
     })
@@ -212,8 +182,6 @@ describe('Auto merge', () => {
 
   test('got a PR approved & merged from grouped deps', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -339,10 +307,8 @@ You can trigger Dependabot actions by commenting on this PR:
     }
 
     const autoMerge = new AutomergeHandler('GH_TOKEN')
-    await autoMerge.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await autoMerge.handle(githubEvent)
+    expect(response).toEqual({
       body: 'All done!',
       statusCode: 204,
     })
@@ -360,7 +326,6 @@ You can trigger Dependabot actions by commenting on this PR:
   })
 
   test('PR is not opened or reopened', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'closed',
       pull_request: {
@@ -385,17 +350,14 @@ You can trigger Dependabot actions by commenting on this PR:
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Wrong action',
       statusCode: 204,
     })
   })
 
   test('PR is not mergeable', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'reopened',
       pull_request: {
@@ -420,17 +382,14 @@ You can trigger Dependabot actions by commenting on this PR:
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: "PR can't be merged",
       statusCode: 204,
     })
   })
 
   test('repo has not the auto_merge enabled', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -455,17 +414,14 @@ You can trigger Dependabot actions by commenting on this PR:
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Repo does not allow auto merge',
       statusCode: 204,
     })
   })
 
   test('PR is not from dependabot', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -490,17 +446,14 @@ You can trigger Dependabot actions by commenting on this PR:
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Not a PR from dependabot',
       statusCode: 204,
     })
   })
 
   test('PR is about a major change', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -525,17 +478,14 @@ You can trigger Dependabot actions by commenting on this PR:
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Update is a major version',
       statusCode: 204,
     })
   })
 
   test('PR is about a major change from grouped updates', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -562,17 +512,14 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
       body: 'Update is a major version',
       statusCode: 204,
     })
   })
 
   test('PR is about an unknown change from grouped updates', async () => {
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -598,19 +545,15 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
       },
     }
 
-    await handler({ body: JSON.stringify(githubEvent) }, {}, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
-      body: 'Unable to dermine the update type',
+    const response = await handler({ body: JSON.stringify(githubEvent) })
+    expect(response).toEqual({
+      body: 'Unable to determine the update type',
       statusCode: 204,
     })
   })
 
   test('PR has already auto_merge enabled', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -636,10 +579,8 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
     }
 
     const autoMerge = new AutomergeHandler('GH_TOKEN')
-    await autoMerge.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await autoMerge.handle(githubEvent)
+    expect(response).toEqual({
       body: 'All done!',
       statusCode: 204,
     })
@@ -654,8 +595,6 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
 
   test('PR is about a minor change from alpha versions', async () => {
     fetchMock.mockGlobal().route('*', 200)
-
-    const callback = jest.fn()
     const githubEvent = {
       action: 'opened',
       pull_request: {
@@ -683,10 +622,8 @@ Updates \`@storybook/addon-essentials\` from 6.5.12 to 7.5.13`,
     }
 
     const autoMerge = new AutomergeHandler('GH_TOKEN')
-    await autoMerge.handle(githubEvent, callback)
-
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenCalledWith(null, {
+    const response = await autoMerge.handle(githubEvent)
+    expect(response).toEqual({
       body: 'All done!',
       statusCode: 204,
     })

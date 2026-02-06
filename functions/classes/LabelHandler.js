@@ -14,11 +14,11 @@ export class LabelHandler extends Handler {
       .filter((label) => label.trim().length)
   }
 
-  async handle(body, callback) {
+  async handle(body) {
     let response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
@@ -42,7 +42,7 @@ export class LabelHandler extends Handler {
 
       console.log('Success: no blocked labels defined')
 
-      return callback(null, response)
+      return response
     }
 
     // no labels defined in the PR: we block the PR
@@ -51,7 +51,7 @@ export class LabelHandler extends Handler {
 
       console.log('Fail: no labels defined in the PR')
 
-      return callback(null, response)
+      return response
     }
 
     // loop through PR labels to see if we found one which should block the PR
@@ -67,6 +67,6 @@ export class LabelHandler extends Handler {
 
     response = await this.updateStatus(body, validation ? payload.success : payload.failure)
 
-    return callback(null, response)
+    return response
   }
 }

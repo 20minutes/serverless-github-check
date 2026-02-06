@@ -8,11 +8,11 @@ export class ArtifactsHandler extends Handler {
     this.artifactsRegex = artifactsRegex
   }
 
-  async handle(body, callback) {
+  async handle(body) {
     let response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
@@ -44,7 +44,7 @@ export class ArtifactsHandler extends Handler {
 
       response = await this.updateStatus(body, payload.success)
 
-      return callback(null, response)
+      return response
     }
 
     const refMatch = file.contents_url.match(/ref=([a-z0-9]+)/)
@@ -53,7 +53,7 @@ export class ArtifactsHandler extends Handler {
 
       response = await this.updateStatus(body, payload.success)
 
-      return callback(null, response)
+      return response
     }
 
     const content = await this.githubClient.rest.repos.getContent({
@@ -72,7 +72,7 @@ export class ArtifactsHandler extends Handler {
       response = await this.updateStatus(body, payload.success)
       console.log('Parsing package.json failed:', e)
 
-      return callback(null, response)
+      return response
     }
 
     const deps = {
@@ -92,6 +92,6 @@ export class ArtifactsHandler extends Handler {
       response = await this.updateStatus(body, payload.failure)
     }
 
-    return callback(null, response)
+    return response
   }
 }

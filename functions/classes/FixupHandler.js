@@ -7,11 +7,11 @@ export class FixupHandler extends Handler {
     this.namespace = namespace
   }
 
-  async handle(body, callback) {
+  async handle(body) {
     let response = this.validateEvent(body)
 
     if (response !== true) {
-      return callback(null, response)
+      return response
     }
 
     console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
@@ -56,6 +56,6 @@ export class FixupHandler extends Handler {
 
     response = await this.updateStatus(body, validation ? payload.success : payload.failure)
 
-    return callback(null, response)
+    return response
   }
 }

@@ -6,13 +6,13 @@ const label = new LabelHandler(
   process.env.BLOCK_LABELS
 )
 
-export async function handler(event, context, callback) {
+export async function handler(event) {
   if (event.headers?.['content-type'] === 'application/x-www-form-urlencoded') {
-    return callback(null, {
+    return {
       statusCode: 500,
       body: 'Please choose "application/json" as Content type in the webhook definition (you should re-create it)',
-    })
+    }
   }
 
-  return label.handle(JSON.parse(event.body), callback)
+  return label.handle(JSON.parse(event.body))
 }
