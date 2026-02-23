@@ -6,7 +6,8 @@
     "test": "vitest run --silent",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "lint": "eslint functions/ tests/"
+    "lint": "biome check --max-diagnostics=none",
+    "lint:fix": "biome check --write --unsafe --max-diagnostics=none"
   },
   "author": "20 Minutes <web-tech@20minutes.fr>",
   "license": "MIT",
@@ -16,17 +17,10 @@
     "node": ">= 24"
   },
   "devDependencies": {
-    "@20minutes/eslint-config": "^2.0.0",
+    "@20minutes/eslint-config": "^3.0.0",
     "@fetch-mock/vitest": "^0.2.18",
     "@vitest/coverage-v8": "^4.0.18",
     "esbuild": "^0.27.3",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "prettier": "^3.8.1",
     "serverless-esbuild": "^1.57.0",
     "serverless-offline": "^13.9.0",
     "vitest": "^4.0.18"
