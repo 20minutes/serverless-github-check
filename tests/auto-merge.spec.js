@@ -1,6 +1,6 @@
 import fetchMock from '@fetch-mock/vitest'
-import { AutomergeHandler } from '../functions/classes/AutomergeHandler.js'
 import { handler } from '../functions/auto-merge.js'
+import { AutomergeHandler } from '../functions/classes/AutomergeHandler.js'
 
 describe('Validating GitHub event', () => {
   test('bad content type', async () => {

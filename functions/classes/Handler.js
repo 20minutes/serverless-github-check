@@ -1,5 +1,5 @@
-import { Octokit } from '@octokit/rest'
 import { graphql } from '@octokit/graphql'
+import { Octokit } from '@octokit/rest'
 
 export class Handler {
   constructor(githubToken) {
