@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@20minutes/eslint-config@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@20minutes/eslint-config/-/eslint-config-3.0.0.tgz#daf43cd1d8c67dcf7f639bfba6094e8e17bf939f"
-  integrity sha512-43jA65xFKYCfUnelLAeGJ3hmXKD2VDQxgjWfSd6aCAyxy2PkISnUAJiawvW9mJ0Mz2fxatUv8ZndSh74GAC5Tw==
+"@20minutes/eslint-config@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@20minutes/eslint-config/-/eslint-config-3.0.1.tgz#ca4593d57963c2c7f05df87d6aa5409cc9111fa1"
+  integrity sha512-d3Tne6NPV6z+S8OHfYmzlE94F4Qsz43nhTsi+I+D5lVGdNSWhd5pbEHEGJPBZJq1aM2vxANqtUvUUNh8vhFLag==
   dependencies:
     "@biomejs/biome" "^2.4.2"
 

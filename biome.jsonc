@@ -1,3 +1,5 @@
 {
-  "extends": ["@20minutes/eslint-config/biome"]
+  "extends": [
+    "@20minutes/eslint-config/biome"
+  ]
 }
