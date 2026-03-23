@@ -17,7 +17,7 @@
     "node": ">= 24"
   },
   "devDependencies": {
-    "@20minutes/eslint-config": "^3.0.1",
+    "@20minutes/eslint-config": "^3.0.2",
     "@fetch-mock/vitest": "^0.2.18",
     "@vitest/coverage-v8": "^4.0.18",
     "esbuild": "^0.27.4",
