@@ -20,7 +20,7 @@
     "@20minutes/eslint-config": "^3.0.2",
     "@fetch-mock/vitest": "^0.2.18",
     "@vitest/coverage-v8": "^4.0.18",
-    "esbuild": "^0.27.7",
+    "esbuild": "^0.28.0",
     "serverless-esbuild": "^1.57.1",
     "serverless-offline": "^13.9.0",
     "vitest": "^4.0.18"
