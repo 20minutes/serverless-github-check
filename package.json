@@ -19,7 +19,7 @@
   "devDependencies": {
     "@20minutes/eslint-config": "^3.0.3",
     "@fetch-mock/vitest": "^0.2.18",
-    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/coverage-v8": "^4.1.8",
     "esbuild": "^0.28.0",
     "serverless-esbuild": "^1.57.2",
     "serverless-offline": "^13.10.0",
