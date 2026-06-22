@@ -3234,10 +3234,10 @@ serverless-esbuild@^1.57.2:
     ramda "^0.28.0"
     semver "^7.3.8"
 
-serverless-offline@^13.10.0:
-  version "13.10.0"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.10.0.tgz#c3e336654a821d3b965b9619c60785f6153d617b"
-  integrity sha512-TchZKgG9bLos347h4lHbuXgVLoODxx5mafcCTDT3CGWWcbv0k92L7/xoMTMCCvWGzeOC+7DMcXxJ0vSGbMjT7w==
+serverless-offline@^13.10.1:
+  version "13.10.1"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.10.1.tgz#39a2971c03eecd02a0e30eb6614d0247bdf00951"
+  integrity sha512-8OfK5xIC1S5yRZAZDuNQgdr5f+LNpVKsFaFxdRslrentD6PuonH+fRYBSHS+lBKrYQGSKNotG4EEPs03nvwFrg==
   dependencies:
     "@aws-sdk/client-lambda" "^3.636.0"
     "@hapi/boom" "^10.0.1"
