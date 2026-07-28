@@ -7,6 +7,8 @@ updates:
     time: "04:00"
     timezone: Europe/Paris
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
   ignore:
   # because it requires Serverless v4
   - dependency-name: "serverless-offline"
@@ -19,3 +21,5 @@ updates:
     time: "04:00"
     timezone: Europe/Paris
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
