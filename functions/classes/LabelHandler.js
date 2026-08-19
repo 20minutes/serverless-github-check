@@ -21,7 +21,7 @@ export class LabelHandler extends Handler {
       return response
     }
 
-    console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
+    console.info(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     const payload = {
       success: {
@@ -40,7 +40,7 @@ export class LabelHandler extends Handler {
     if (this.blockLabels.length === 0) {
       response = await this.updateStatus(body, payload.success)
 
-      console.log('Success: no blocked labels defined')
+      console.info('Success: no blocked labels defined')
 
       return response
     }
@@ -49,7 +49,7 @@ export class LabelHandler extends Handler {
     if (body.pull_request.labels.length === 0) {
       response = await this.updateStatus(body, payload.failure)
 
-      console.log('Fail: no labels defined in the PR')
+      console.warn('Fail: no labels defined in the PR')
 
       return response
     }
@@ -57,7 +57,7 @@ export class LabelHandler extends Handler {
     // loop through PR labels to see if we found one which should block the PR
     const validation = body.pull_request.labels.every(({ name }) => {
       if (this.blockLabels.find((blockLabel) => blockLabel === name)) {
-        console.log('Fail: at least one blocked label found')
+        console.warn('Fail: at least one blocked label found')
 
         return false
       }

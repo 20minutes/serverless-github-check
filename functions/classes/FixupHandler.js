@@ -14,7 +14,7 @@ export class FixupHandler extends Handler {
       return response
     }
 
-    console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
+    console.info(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     const payload = {
       success: {
@@ -49,7 +49,7 @@ export class FixupHandler extends Handler {
         return true
       }
 
-      console.log(`Fixup commit found: "${commit.message}"`)
+      console.warn(`Fixup commit found: "${commit.message}"`)
 
       return false
     })
