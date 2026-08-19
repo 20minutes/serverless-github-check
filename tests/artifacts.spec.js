@@ -267,6 +267,84 @@ describe('Artifacts check', () => {
     )
   })
 
+  test('got a package.json file in subfolder and block merge', async () => {
+    fetchMock
+      .mockGlobal()
+      .route('https://api.github.com/repos/foo/bar/pulls/42/files', [
+        {
+          sha: 'c14ebcf2a1782dec1bf65b2d4fbc295964b81754',
+          filename: 'main/package.json',
+          status: 'modified',
+          additions: 1,
+          deletions: 1,
+          changes: 2,
+          blob_url:
+            'https://github.com/foo/bar/blob/d3f0969ba9b5d5f5713fd804246886917adab874/main/package.json',
+          raw_url:
+            'https://github.com/foo/bar/raw/d3f0969ba9b5d5f5713fd804246886917adab874/main/package.json',
+          contents_url:
+            'https://api.github.com/repos/foo/bar/contents/main/package.json?ref=d3f0969ba9b5d5f5713fd804246886917adab874',
+          patch:
+            '@@ -1,5 +1,5 @@\n   "dependencies": {\n-    "super": "^1.0.0"\n+    "super": "http://localhost:1234/package.zip"\n   }',
+        },
+      ])
+      .route(
+        'https://api.github.com/repos/foo/bar/contents/main%2Fpackage.json?ref=d3f0969ba9b5d5f5713fd804246886917adab874',
+        {
+          name: 'package.json',
+          path: 'main/package.json',
+          sha: 'c366d3955407f49b5110aae7d8d04fcf0b3ef1de',
+          size: 86,
+          type: 'file',
+          content:
+            'ewogICJkZXBlbmRlbmNpZXMiOiB7CiAgICAic3VwZXIiOiAiaHR0cDovL2xvY2FsaG9zdDoxMjM0L3BhY2thZ2UuemlwIgogIH0KfQ==',
+          encoding: 'base64',
+        }
+      )
+      .route(
+        'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        200
+      )
+    const githubEvent = {
+      pull_request: {
+        number: 42,
+        title: 'Update',
+        body: 'This is a pretty simple change that we need to pull into master.',
+        head: {
+          sha: 'ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+        },
+        base: {
+          sha: '1e55a1223ce20c3e7cb776349cb7f8efb7b8851e',
+        },
+      },
+      repository: {
+        name: 'bar',
+        full_name: 'foo/bar',
+        owner: {
+          login: 'foo',
+        },
+      },
+    }
+
+    const fixup = new ArtifactsHandler('GH_TOKEN', 'THE BRAND', '(localhost:)')
+    const response = await fixup.handle(githubEvent)
+    expect(response).toEqual({
+      body: 'Process finished with state: failure',
+      statusCode: 204,
+    })
+
+    expect(fetch).toHaveLastFetched(
+      'https://api.github.com/repos/foo/bar/statuses/ee55a1223ce20c3e7cb776349cb7f8efb7b88511',
+      {
+        body: {
+          state: 'failure',
+          description: 'Artifacts found in deps, remove them to merge',
+          context: 'THE BRAND - Artifacts check',
+        },
+      }
+    )
+  })
+
   test('got a package.json file and block merge', async () => {
     fetchMock
       .mockGlobal()

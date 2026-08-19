@@ -36,10 +36,12 @@ export class ArtifactsHandler extends Handler {
       pull_number: body.pull_request.number,
     })
 
-    // loop through all files to see if package.json has been updated
-    const file = files.data.find(({ filename }) => filename.includes('package.json'))
+    // loop through all files to see if package.json has been updated (root or subfolders)
+    const packageJsonFiles = files.data.filter(
+      ({ filename }) => filename === 'package.json' || filename.endsWith('/package.json')
+    )
 
-    if (!file) {
+    if (packageJsonFiles.length === 0) {
       console.info('No package.json found in PR')
 
       response = await this.updateStatus(body, payload.success)
@@ -47,42 +49,46 @@ export class ArtifactsHandler extends Handler {
       return response
     }
 
-    const refMatch = file.contents_url.match(/ref=([a-z0-9]+)/)
-    if (!refMatch?.[1]) {
-      console.warn('no ref in package.json diff url?')
+    let artifactFound = false
 
-      response = await this.updateStatus(body, payload.success)
+    for (const file of packageJsonFiles) {
+      const refMatch = file.contents_url.match(/ref=([a-z0-9]+)/)
+      if (!refMatch?.[1]) {
+        console.warn(`no ref in ${file.filename} diff url?`)
+        continue
+      }
 
-      return response
+      const content = await this.githubClient.rest.repos.getContent({
+        owner: body.repository.owner.login,
+        repo: body.repository.name,
+        path: file.filename,
+        ref: refMatch[1],
+      })
+
+      let packageJson = ''
+      try {
+        packageJson = JSON.parse(
+          Buffer.from(content.data.content.toString('utf8'), 'base64').toString('ascii')
+        )
+      } catch (e) {
+        console.error(`Parsing ${file.filename} failed:`, e)
+        continue
+      }
+
+      const deps = {
+        dependencies: packageJson.dependencies || {},
+        devDependencies: packageJson.devDependencies || {},
+      }
+
+      const match = JSON.stringify(deps).match(this.artifactsRegex)
+
+      if (match !== null) {
+        artifactFound = true
+        break
+      }
     }
 
-    const content = await this.githubClient.rest.repos.getContent({
-      owner: body.repository.owner.login,
-      repo: body.repository.name,
-      path: file.filename,
-      ref: refMatch[1],
-    })
-
-    let packageJson = ''
-    try {
-      packageJson = JSON.parse(
-        Buffer.from(content.data.content.toString('utf8'), 'base64').toString('ascii')
-      )
-    } catch (e) {
-      response = await this.updateStatus(body, payload.success)
-      console.error('Parsing package.json failed:', e)
-
-      return response
-    }
-
-    const deps = {
-      dependencies: packageJson.dependencies || {},
-      devDependencies: packageJson.devDependencies || {},
-    }
-
-    const match = JSON.stringify(deps).match(this.artifactsRegex)
-
-    if (match === null) {
+    if (!artifactFound) {
       console.info('No match, success.')
 
       response = await this.updateStatus(body, payload.success)

@@ -11,7 +11,7 @@ Apply some simple checks on each PR.
 
 ## Use Cases
 
-We have 4 functions available:
+We have 5 functions available:
 
 - **specification**: It validates GitHub Pull Requests against some specifications:
     - `body` should be at least 8 characters long
@@ -25,6 +25,10 @@ We have 4 functions available:
     - if no fixup commits are found, PR is validated
 - **autoMerge**: It merges PR from @dependabot when the update it for a patch or a minor version
     - the repo must have the _auto merge_ option enabled
+- **artifacts**: It checks if `package.json` dependencies contain artifact URLs matching a configured regex
+    - it checks `package.json` files at the repository root or in subfolders
+    - if a matching dependency is found, PR is blocked
+    - if no matching dependency is found, PR is validated
 
 ## Prerequisites
 
@@ -62,6 +66,7 @@ You can update some options from the `serverless.yml` file:
 - `CHECK_BODY_LENGTH`: change the minimun length of the body of the PR
 - `CHECK_TITLE_LENGTH`: change the minimun length of the title of the PR
 - `BLOCK_LABELS`: define which label will block a PR (comma separated strings)
+- `ARTIFACTS_REGEX`: define which artifact URLs in `package.json` dependencies will block a PR
 
 ## Info
 
