@@ -30,14 +30,14 @@ export class Handler {
           message = `Hello ${body.sender.login}, the webhook is now enabled for ${body.repository.full_name}, enjoy!`
         }
 
-        console.log(message)
+        console.info(message)
 
         return {
           statusCode: 200,
           body: message,
         }
       } catch (e) {
-        console.log(e.message)
+        console.error(e.message)
 
         return {
           statusCode: 500,

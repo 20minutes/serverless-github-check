@@ -10,10 +10,10 @@ export class AutomergeHandler extends Handler {
       return response
     }
 
-    console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
+    console.info(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     if (!['opened', 'reopened', 'synchronize'].includes(body?.action)) {
-      console.log(`Wrong action: ${body?.action}`)
+      console.info(`Wrong action: ${body?.action}`)
 
       return {
         statusCode: 204,
@@ -22,7 +22,7 @@ export class AutomergeHandler extends Handler {
     }
 
     if (body?.pull_request?.mergeable === false) {
-      console.log(`PR can't be merged`)
+      console.warn(`PR can't be merged`)
 
       return {
         statusCode: 204,
@@ -31,7 +31,7 @@ export class AutomergeHandler extends Handler {
     }
 
     if (body?.pull_request?.base?.repo?.allow_auto_merge !== true) {
-      console.log(
+      console.warn(
         `Repo does not allow auto merge: ${body?.pull_request?.base?.repo?.allow_auto_merge}`
       )
 
@@ -42,7 +42,7 @@ export class AutomergeHandler extends Handler {
     }
 
     if (body?.pull_request?.user?.login !== 'dependabot[bot]') {
-      console.log(`Not a PR from dependabot: ${body?.pull_request?.user?.login}`)
+      console.info(`Not a PR from dependabot: ${body?.pull_request?.user?.login}`)
 
       return {
         statusCode: 204,
@@ -69,8 +69,8 @@ export class AutomergeHandler extends Handler {
 
       updateType = res === false ? 'minor' : 'major'
     } else {
-      console.log(`Unable to determine the update type...`)
-      console.log(JSON.stringify(body.pull_request))
+      console.warn(`Unable to determine the update type...`)
+      console.warn(JSON.stringify(body.pull_request))
 
       return {
         statusCode: 204,
@@ -79,7 +79,7 @@ export class AutomergeHandler extends Handler {
     }
 
     if (updateType === 'major') {
-      console.log(`Update is a major version: ${body?.pull_request?.title}`)
+      console.warn(`Update is a major version: ${body?.pull_request?.title}`)
 
       return {
         statusCode: 204,
@@ -101,7 +101,7 @@ export class AutomergeHandler extends Handler {
       }
     )
 
-    console.log('PR approved!')
+    console.info('PR approved!')
 
     // enable auto merge OR merge it
     try {
@@ -119,7 +119,7 @@ export class AutomergeHandler extends Handler {
           }
         )
 
-        console.log('PR (soon to be) merged!')
+        console.info('PR (soon to be) merged!')
       }
     } catch (error) {
       // in case of error about the PR not in clean status, it means the PR can be merge without automerge enabled
@@ -142,7 +142,7 @@ export class AutomergeHandler extends Handler {
           }
         )
 
-        console.log('PR merged!')
+        console.info('PR merged!')
       } else {
         throw error
       }

@@ -16,7 +16,7 @@ export class SpecificationHandler extends Handler {
       return response
     }
 
-    console.log(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
+    console.info(`Working on repo ${body.repository.full_name} for PR #${body.pull_request.number}`)
 
     const payload = {
       state: 'success',
@@ -28,14 +28,14 @@ export class SpecificationHandler extends Handler {
       payload.state = 'failure'
       payload.description = 'Title is too short.'
 
-      console.log('Fail: title too short')
+      console.warn('Fail: title too short')
     }
 
     if (!body.pull_request?.body || body?.pull_request?.body?.length < this.bodyLength) {
       payload.state = 'failure'
       payload.description = 'PR description is too short.'
 
-      console.log('Fail: body too short')
+      console.warn('Fail: body too short')
     }
 
     response = await this.updateStatus(body, payload)
