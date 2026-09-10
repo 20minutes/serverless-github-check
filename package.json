@@ -23,7 +23,7 @@
     "esbuild": "^0.28.2",
     "serverless-esbuild": "^1.57.2",
     "serverless-offline": "^13.10.1",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.11"
   },
   "dependencies": {
     "@octokit/graphql": "^9.0.5",
