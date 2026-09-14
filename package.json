@@ -19,11 +19,12 @@
   "devDependencies": {
     "@20minutes/eslint-config": "^3.0.9",
     "@fetch-mock/vitest": "^0.2.18",
-    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/coverage-v8": "^5.0.0",
     "esbuild": "^0.28.2",
     "serverless-esbuild": "^1.57.2",
     "serverless-offline": "^13.10.1",
-    "vitest": "^4.1.11"
+    "vite": "^8.3.0",
+    "vitest": "^5.0.0"
   },
   "dependencies": {
     "@octokit/graphql": "^9.0.5",
