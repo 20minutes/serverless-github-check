@@ -12,6 +12,10 @@ updates:
   - dependency-name: "serverless-offline"
     versions:
     - ">= 14"
+  groups:
+    vitest-dependencies:
+      patterns:
+        - "*vitest*"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
