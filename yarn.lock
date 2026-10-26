@@ -2125,7 +2125,7 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsonpath-plus@^10.2.0:
+jsonpath-plus@^10.4.0:
   version "10.4.0"
   resolved "https://registry.yarnpkg.com/jsonpath-plus/-/jsonpath-plus-10.4.0.tgz#73cf545c231afda21452150b7a2a58e48e109702"
   integrity sha512-T92WWatJXmhBbKsgH/0hl+jxjdXrifi5IKeMY02DWggRxX0UElcbVzPlmgLTbvsPeW1PasQ6xE2Q75stkhGbsA==
@@ -2688,10 +2688,10 @@ serverless-esbuild@^1.57.2:
     ramda "^0.28.0"
     semver "^7.3.8"
 
-serverless-offline@^13.10.1:
-  version "13.10.1"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.10.1.tgz#39a2971c03eecd02a0e30eb6614d0247bdf00951"
-  integrity sha512-8OfK5xIC1S5yRZAZDuNQgdr5f+LNpVKsFaFxdRslrentD6PuonH+fRYBSHS+lBKrYQGSKNotG4EEPs03nvwFrg==
+serverless-offline@^13.10.2:
+  version "13.10.2"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-13.10.2.tgz#62247143e6ccb90dddbed3795b27dba3077c2e86"
+  integrity sha512-st4bugOV84b2esGk+KttFqpZAy8ptn6+i/LkW7r++U9/0Lb4Rtbt1eVj9Af8Nk9Y4PJBIiYr8MV8RVurNYnKiQ==
   dependencies:
     "@aws-sdk/client-lambda" "^3.636.0"
     "@hapi/boom" "^10.0.1"
@@ -2707,7 +2707,7 @@ serverless-offline@^13.10.1:
     java-invoke-local "0.0.6"
     jose "^5.7.0"
     js-string-escape "^1.0.1"
-    jsonpath-plus "^10.2.0"
+    jsonpath-plus "^10.4.0"
     jsonschema "^1.4.1"
     jszip "^3.10.1"
     luxon "^3.5.0"
